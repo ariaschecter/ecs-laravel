@@ -102,7 +102,7 @@
                 <li class="menu-title mt-2">Admin</li>
 
                 <li>
-                    <a href="#">
+                    <a href="/user">
                         <i data-feather="calendar"></i>
                         <span> User </span>
                     </a>

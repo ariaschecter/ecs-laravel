@@ -32,8 +32,10 @@
             <div class="mt-2">
                 <label for="example-select" class="form-label">Select Role</label>
                 <select class="form-select" id="role_id" name="role_id">
-                    <option value="1">Admin</option>
-                    <option value="2">Student</option>
+                    <option selected value="{{ $user->role_id }}">{{ $user->role->role_name }}</option>
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->role_id }}">{{ $role->role_name }}</option>
+                    @endforeach
                 </select>
             </div>
 

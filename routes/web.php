@@ -20,8 +20,9 @@ Route::get('/', function () {
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index');
-    Route::get('/user/{id}', 'show');
-    Route::get('/user/reset/{id}', 'reset');
-    Route::get('/user/update/{id}', 'edit');
-    Route::post('/user/update/{id}', 'update');
+    Route::get('/user/add', 'create');
+    Route::post('/user/add', 'store');
+    Route::get('/user/update/{user}', 'edit');
+    Route::post('/user/update/{user}', 'update');
+    Route::post('/user/delete/{user}', 'destroy');
 });

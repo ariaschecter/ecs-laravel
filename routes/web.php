@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,14 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/user/edit/{user:user_id}', 'update');
     Route::get('/user/delete/{user:user_id}', 'destroy');
 });
+
+Route::controller(RoleController::class)->group(function () {
+    Route::get('/role', 'index');
+    Route::get('/role/add', 'create');
+    Route::post('/role/add', 'store');
+    Route::get('/role/edit/{role:role_id}', 'edit');
+    Route::post('/role/edit/{role:role_id}', 'update');
+    Route::get('/role/delete/{role:role_id}', 'destroy');
+});
+
+

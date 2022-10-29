@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -46,8 +47,11 @@ class UserController extends Controller
             'role_id' => 'required',
         ]);
 
-        dd($request);
+        $user = $request->except(['password_confirmation', '_token']);
+        // dd($user);
 
+        User::create($user);
+        return redirect('user');
     }
 
     /**
@@ -58,7 +62,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.edit')->with('user', $user);
     }
 
     /**
@@ -70,7 +74,19 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'user_name' => 'required',
+            'email' => ['required',Rule::unique('users')->ignore($user->user_id, 'user_id')],
+            'user_city' => 'required',
+            'user_age' => 'required',
+            'role_id' => 'required',
+        ]);
+
+        $update = $request->except(['_token']);
+        // dd($user);
+
+        User::where('user_id', $user->user_id)->update($update);
+        return redirect('user');
     }
 
     /**
@@ -81,6 +97,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        User::where('user_id', $user->user_id)->delete();
+        return redirect('user');
     }
 }

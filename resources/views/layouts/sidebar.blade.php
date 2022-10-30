@@ -87,7 +87,7 @@
                 <li class="menu-title mt-2">Transaction</li>
 
                 <li>
-                    <a href="#">
+                    <a href="/payment">
                         <i data-feather="calendar"></i>
                         <span> Payment </span>
                     </a>

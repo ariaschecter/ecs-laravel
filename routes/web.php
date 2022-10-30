@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
@@ -36,6 +37,15 @@ Route::controller(RoleController::class)->group(function () {
     Route::get('/role/edit/{role:role_id}', 'edit');
     Route::post('/role/edit/{role:role_id}', 'update');
     Route::get('/role/delete/{role:role_id}', 'destroy');
+});
+
+Route::controller(PaymentController::class)->group(function () {
+    Route::get('/payment', 'index');
+    Route::get('/payment/add', 'create');
+    Route::post('/payment/add', 'store');
+    Route::get('/payment/edit/{payment:payment_id}', 'edit');
+    Route::post('/payment/edit/{payment:payment_id}', 'update');
+    Route::get('/payment/delete/{payment:payment_id}', 'destroy');
 });
 
 Route::controller(PaymentMethodController::class)->group(function () {

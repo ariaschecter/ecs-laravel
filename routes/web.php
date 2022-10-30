@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PaymentMethodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,15 @@ Route::controller(RoleController::class)->group(function () {
     Route::get('/role/edit/{role:role_id}', 'edit');
     Route::post('/role/edit/{role:role_id}', 'update');
     Route::get('/role/delete/{role:role_id}', 'destroy');
+});
+
+Route::controller(PaymentMethodController::class)->group(function () {
+    Route::get('/payment_method', 'index');
+    Route::get('/payment_method/add', 'create');
+    Route::post('/payment_method/add', 'store');
+    Route::get('/payment_method/edit/{payment_method:payment_method_id}', 'edit');
+    Route::post('/payment_method/edit/{payment_method:payment_method_id}', 'update');
+    Route::get('/payment_method/delete/{payment_method:payment_method_id}', 'destroy');
 });
 
 

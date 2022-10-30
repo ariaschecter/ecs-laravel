@@ -93,7 +93,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/payment_method">
                         <i data-feather="calendar"></i>
                         <span> Payment Method </span>
                     </a>

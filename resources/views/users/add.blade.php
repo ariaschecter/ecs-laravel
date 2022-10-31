@@ -47,7 +47,7 @@
                 <span class="help-block"><small>A block of help text that breaks onto a new line and may extend beyond one line.</small></span>
             </div> --}}
             <div class="mt-2">
-                <label for="example-select" class="form-label">Select Role</label>
+                <label for="role_id" class="form-label">Select Role</label>
                 <select class="form-select" id="role_id" name="role_id">
                     @foreach ($roles as $role)
                         <option value="{{ $role->role_id }}">{{ $role->role_name }}</option>

@@ -39,7 +39,14 @@ class AuthController extends Controller
         if (!auth()->attempt($loginData)) {
             return response(['message' => 'User ini tidak Terdaftar, silahkan cek kembali!'], 400);
         }
-        $active = auth()->user()->active = 1;
+
+        $active = auth()->user()->active;
+
+        if ($active == 1) {
+            return response(['message' => 'User ini sedang aktif!!! tidak bisa login'], 400);
+        }
+
+        $active = 1;
         User::where('email', auth()->user()->email)->update(['active' => $active]);
 
         return response(['user' => auth()->user()]);

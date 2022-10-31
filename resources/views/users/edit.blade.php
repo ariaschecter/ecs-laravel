@@ -30,7 +30,7 @@
             @error('user_age') <div class="text-danger">{{ $message }}</div> @enderror
 
             <div class="mt-2">
-                <label for="example-select" class="form-label">Select Role</label>
+                <label for="role_id" class="form-label">Select Role</label>
                 <select class="form-select" id="role_id" name="role_id">
                     <option selected value="{{ $user->role_id }}">{{ $user->role->role_name }}</option>
                     @foreach ($roles as $role)

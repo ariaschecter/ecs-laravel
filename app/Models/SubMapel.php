@@ -16,6 +16,6 @@ class SubMapel extends Model
     }
 
     public function list_mapel() {
-        return $this->hasMany(ListMapel::class, 'sub_mapel_id', 'sub_mapel_id');
+        return $this->hasMany(ListMapel::class, 'sub_mapel_id', 'sub_mapel_id')->orderBy('sub_mapel_id', 'ASC');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mapel;
+use App\Models\SubMapel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -22,7 +23,8 @@ class MapelController extends Controller
 
     public function show(Mapel $mapel)
     {
-        return view('mapel.show');
+        $sub_mapels = SubMapel::where('mapel_id', $mapel->mapel_id)->get();
+        return view('mapel.show')->with('sub_mapels', $sub_mapels);
     }
 
     /**

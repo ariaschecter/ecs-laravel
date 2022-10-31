@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MapelController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -19,6 +20,16 @@ use App\Http\Controllers\PaymentMethodController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::controller(MapelController::class)->group(function () {
+    Route::get('/mapel', 'index');
+    Route::get('/mapel/show/{mapel:mapel_id}', 'show');
+    Route::get('/mapel/add', 'create');
+    Route::post('/mapel/add', 'store');
+    Route::get('/mapel/edit/{mapel:mapel_id}', 'edit');
+    Route::post('/mapel/edit/{mapel:mapel_id}', 'update');
+    Route::get('/mapel/delete/{mapel:mapel_id}', 'destroy');
 });
 
 Route::controller(UserController::class)->group(function () {

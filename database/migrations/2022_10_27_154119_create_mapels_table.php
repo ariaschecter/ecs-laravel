@@ -14,7 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('mapels', function (Blueprint $table) {
-            $table->id();
+            $table->id('mapel_id');
+            $table->integer('semester_id');
+            $table->string('mapel_name');
+            $table->string('mapel_slug');
+            $table->string('mapel_picture');
+            $table->integer('mapel_active')->default(0);
             $table->timestamps();
         });
     }

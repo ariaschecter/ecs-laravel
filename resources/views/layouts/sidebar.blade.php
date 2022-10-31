@@ -66,7 +66,7 @@
                     <div class="collapse" id="sidebarMataPelajaran">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="#">Mata Pelajaran</a>
+                                <a href="/mapel">Mata Pelajaran</a>
                             </li>
                             <li>
                                 <a href="#">Sub Mata Pelajaran</a>

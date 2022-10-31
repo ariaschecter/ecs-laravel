@@ -72,7 +72,7 @@
                                 <a href="/sub_mapel">Sub Mata Pelajaran</a>
                             </li>
                             <li>
-                                <a href="#">List Mata Pelajaran</a>
+                                <a href="/list_mapel">List Mata Pelajaran</a>
                             </li>
                         </ul>
                     </div>

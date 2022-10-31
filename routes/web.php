@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ListMapelController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,15 @@ Route::controller(SubMapelController::class)->group(function () {
     Route::get('/sub_mapel/edit/{sub_mapel:sub_mapel_id}', 'edit');
     Route::post('/sub_mapel/edit/{sub_mapel:sub_mapel_id}', 'update');
     Route::get('/sub_mapel/delete/{sub_mapel:sub_mapel_id}', 'destroy');
+});
+
+Route::controller(ListMapelController::class)->group(function () {
+    Route::get('/list_mapel', 'index');
+    Route::get('/list_mapel/add', 'create');
+    Route::post('/list_mapel/add', 'store');
+    Route::get('/list_mapel/edit/{list_mapel:list_mapel_id}', 'edit');
+    Route::post('/list_mapel/edit/{list_mapel:list_mapel_id}', 'update');
+    Route::get('/list_mapel/delete/{list_mapel:list_mapel_id}', 'destroy');
 });
 
 Route::controller(UserController::class)->group(function () {

@@ -33,7 +33,7 @@
                                 <td>#{{ $payment->payment_ref }}</td>
                                 <td><img src="{{ asset('storage/' . $payment->payment_picture) }}" alt="{{ 'Foto '. $payment->user->user_name }}" class="" width="75"></td>
                                 <td>{{ $payment->user->user_name }}</td>
-                                <td>{{ $payment->payment_price }}</td>
+                                <td>Rp. {{ number_format($payment->payment_price, 0) }}</td>
                                 <td>{{ $payment->payment_status }}</td>
                                 <td>
                                     <a href="{{ url('payment/edit/' . $payment->payment_id) }}" class="btn btn-info">Edit</a>

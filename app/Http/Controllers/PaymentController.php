@@ -6,6 +6,7 @@ use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PaymentController extends Controller
@@ -30,6 +31,7 @@ class PaymentController extends Controller
     {
         $payment_methods = PaymentMethod::all();
         $users = User::all();
+
         return view('payment.add')->with([
             'payment_methods' => $payment_methods,
             'users' => $users,
@@ -76,7 +78,6 @@ class PaymentController extends Controller
         $payment_methods = PaymentMethod::all();
         return view('payment.edit')->with([
             'payment' => $payment,
-            'payment_methods' => $payment_methods
         ]);
     }
 
@@ -89,11 +90,7 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-        $request->validate([
-            'picture' => 'required',
-        ]);
-
-        $update = $request->except(['_token']);
+        $update = $request->only(['payment_status']);
         // dd($payment);
 
         Payment::where('payment_id', $payment->payment_id)->update($update);
@@ -109,6 +106,7 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         Payment::where('payment_id', $payment->payment_id)->delete();
+        Storage::delete($payment->payment_picture);
         return redirect('payment');
     }
 }

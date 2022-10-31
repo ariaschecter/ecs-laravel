@@ -14,7 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('sub_mapels', function (Blueprint $table) {
-            $table->id();
+            $table->id('sub_mapel_id');
+            $table->foreignId('mapel_id');
+            $table->integer('sub_mapel_no');
+            $table->string('sub_mapel_name');
             $table->timestamps();
         });
     }

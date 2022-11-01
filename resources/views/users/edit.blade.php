@@ -3,7 +3,7 @@
 @section('body')
 <div class="row">
     <div class="col-lg-6">
-        <form method="POST" action="{{ url('user/edit/' . $user->user_id) }}">
+        <form method="POST" action="{{ url('user/edit/' . $user->id) }}">
             @csrf
             <div>
                 <label for="user_name" class="form-label">Full Name</label>

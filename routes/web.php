@@ -56,9 +56,9 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index');
     Route::get('/user/add', 'create');
     Route::post('/user/add', 'store');
-    Route::get('/user/edit/{user:user_id}', 'edit');
-    Route::post('/user/edit/{user:user_id}', 'update');
-    Route::get('/user/delete/{user:user_id}', 'destroy');
+    Route::get('/user/edit/{user:id}', 'edit');
+    Route::post('/user/edit/{user:id}', 'update');
+    Route::get('/user/delete/{user:id}', 'destroy');
 });
 
 Route::controller(RoleController::class)->group(function () {

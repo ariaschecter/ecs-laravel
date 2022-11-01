@@ -82,7 +82,7 @@ class UserController extends Controller
     {
         $request->validate([
             'user_name' => 'required',
-            'email' => ['required',Rule::unique('users')->ignore($user->user_id, 'user_id')],
+            'email' => ['required', Rule::unique('users')->ignore($user->id, 'id')],
             'user_city' => 'required',
             'user_age' => 'required',
             'role_id' => 'required',
@@ -91,7 +91,7 @@ class UserController extends Controller
         $update = $request->except(['_token']);
         // dd($user);
 
-        User::where('user_id', $user->user_id)->update($update);
+        User::where('id', $user->id)->update($update);
         return redirect('user');
     }
 
@@ -103,7 +103,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        User::where('user_id', $user->user_id)->delete();
+        User::where('id', $user->id)->delete();
         return redirect('user');
     }
 }

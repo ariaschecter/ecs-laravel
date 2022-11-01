@@ -33,8 +33,8 @@
                                 <td>{{ $user->user_city }}</td>
 
                                 <td>
-                                    <a href="{{ url('user/edit/' . $user->user_id) }}" class="btn btn-info">Edit</a>
-                                    <a href="{{ url('user/delete/' . $user->user_id) }}" class="btn btn-danger">Delete</a>
+                                    <a href="{{ url('user/edit/' . $user->id) }}" class="btn btn-info">Edit</a>
+                                    <a href="{{ url('user/delete/' . $user->id) }}" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         @endforeach

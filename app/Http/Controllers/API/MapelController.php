@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Mapel;
 use App\Models\SubMapel;
 use Illuminate\Http\Request;
@@ -18,13 +19,7 @@ class MapelController extends Controller
     public function index()
     {
         $mapels = Mapel::all();
-        return view('mapel.index')->with('mapels', $mapels);
-    }
-
-    public function show(Mapel $mapel)
-    {
-        $sub_mapels = SubMapel::where('mapel_id', $mapel->mapel_id)->get();
-        return view('mapel.show')->with('sub_mapels', $sub_mapels);
+        return response($mapels);
     }
 
     /**
@@ -34,7 +29,7 @@ class MapelController extends Controller
      */
     public function create()
     {
-        return view('mapel.add');
+        //
     }
 
     /**
@@ -57,28 +52,37 @@ class MapelController extends Controller
         $mapel['mapel_slug'] = Str::slug($request->mapel_name, '-');
         $mapel['mapel_picture'] = $mapel_picture;
 
-        Mapel::create($mapel);
-        return redirect('mapel');
+        Mapel::create([$mapel]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Mapel  $mapel
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Mapel $mapel)
+    {
+        $sub_mapels = SubMapel::where('mapel_id', $mapel->mapel_id)->get();
+        return response([$sub_mapels]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Mapel  $mapel
      * @return \Illuminate\Http\Response
      */
     public function edit(Mapel $mapel)
     {
-        return view('mapel.edit')->with([
-            'mapel' => $mapel,
-        ]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Mapel  $mapel
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Mapel $mapel)
@@ -103,19 +107,19 @@ class MapelController extends Controller
 
         // dd($update);
         Mapel::where('mapel_id', $mapel->mapel_id)->update($update);
-        return redirect('mapel');
+        return response($mapel);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Mapel  $mapel
      * @return \Illuminate\Http\Response
      */
     public function destroy(Mapel $mapel)
     {
         Mapel::where('mapel_id', $mapel->mapel_id)->delete();
         Storage::delete($mapel->mapel_picture);
-        return redirect('mapel');
+        return response(['mesage' => 'data berhasil dihapus']);
     }
 }

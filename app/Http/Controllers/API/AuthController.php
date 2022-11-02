@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -24,58 +23,49 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'user_name' => 'required',
-            'email' => 'required|unique:users,email',
-            'user_city' => 'required',
-            'user_age' => 'required',
-            'password' => 'required',
-            'password_confirmation' => 'required|same:password',
-            'role_id' => 'required',
-        ]);
+        // $request->validate([
+        //     'user_name' => 'required',
+        //     'email' => 'required|unique:users,email',
+        //     'user_city' => 'required',
+        //     'user_age' => 'required',
+        //     'password' => 'required',
+        //     'password_confirmation' => 'required|same:password',
+        //     'role_id' => 'required',
+        // ]);
 
-        if ($validator->fails()) {
-            return response(['message' => $validator->messages()]);
-        }
+        // $request['password'] = Hash::make($request->password);
 
-        $validator['password'] = Hash::make($request->password);
+        // User::create($request);
 
-        $user = User::create($validator);
-
-        return $this->response($user);
+        return response($request);
     }
 
     public function updateUser(Request $request, User $user)
     {
-        $validator = Validator::make($request->all(), [
-            'user_name' => 'required',
-            'email' => [Rule::unique('users')->ignore($user->id, 'id'), 'email'],
-        ]);
+        $validate =
+            $request->validate([
+                'user_name' => 'required',
+                'email' => [Rule::unique('users')->ignore($user->id, 'id'), 'email'],
+            ]);
 
-        if ($validator->fails()) {
-            return response(['message' => $validator->messages()]);
-        }
+        $validate['password'] = Hash::make($request->password);
 
-        $validator['password'] = Hash::make($request->password);
+        User::where('id', $user->id)->update($validate);
 
-        User::where('id', $user->id)->update($validator);
-
-        return $this->response($request->user());
+        return response($request);
     }
 
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validate = $request->validate([
             'email' => 'email|required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        if ($validator->fails()) {
-            return response(['message' => $validator->messages()]);
-        }
-
-        if (!Auth::attempt($validator)) {
-            return response(['message' => 'User ini tidak Terdaftar, silahkan cek kembali!'], 401);
+        if (!Auth::attempt($validate)) {
+            return response([
+                'message' => 'User ini tidak Terdaftar, silahkan cek kembali!',
+            ], 401);
         }
 
         $user = Auth::user();

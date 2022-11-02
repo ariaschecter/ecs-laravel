@@ -38,13 +38,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validate = $request->validate([
             'role_name' => 'required|unique:roles,role_name',
         ]);
-
-        if ($validator->fails()) {
-            return response(['message' => $validator->messages()]);
-        }
 
         $role = $request->except(['_token']);
         Role::create($role);
@@ -83,13 +79,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $validator = Validator::make($request->all(), [
+        $validate = $request->validate([
             'role_name' => 'required|unique:roles,role_name',
         ]);
-
-        if ($validator->fails()) {
-            return response(['message' => $validator->messages()]);
-        }
 
         $roles = $request->except(['_token']);
         Role::where('role_id', $role->role_id)->update($roles);

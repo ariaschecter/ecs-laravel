@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Mapel;
-use App\Models\SubMapel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -52,8 +51,8 @@ class MapelController extends Controller
         $mapel['mapel_slug'] = Str::slug($request->mapel_name, '-');
         $mapel['mapel_picture'] = $mapel_picture;
 
-        Mapel::create([$mapel]);
-        return response([$mapel]);
+        Mapel::create($mapel);
+        return response($mapel);
     }
 
     /**
@@ -64,7 +63,7 @@ class MapelController extends Controller
      */
     public function show(Mapel $mapel)
     {
-        $sub_mapels = SubMapel::where('mapel_id', $mapel->mapel_id)->get();
+        $sub_mapels = Mapel::where('mapel_id', $mapel->mapel_id)->get();
         return response($sub_mapels);
     }
 
@@ -108,7 +107,7 @@ class MapelController extends Controller
 
         // dd($update);
         Mapel::where('mapel_id', $mapel->mapel_id)->update($update);
-        return response($mapel);
+        return response($update);
     }
 
     /**

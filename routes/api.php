@@ -38,6 +38,14 @@ Route::controller(MapelController::class)->group(function () {
     Route::delete('mapel/delete/{mapel:mapel_id}', 'destroy');
 });
 
+Route::controller(ListMapelController::class)->group(function () {
+    Route::get('/list_mapel', 'index');
+    Route::post('/list_mapel/add', 'store');
+    Route::post('/list_mapel/show/(listMapel:list_mapel_id}', 'show');
+    Route::post('/list_mapel/edit/{listMapel:list_mapel_id}', 'update');
+    Route::get('/list_mapel/delete/{listMapel:list_mapel_id}', 'destroy');
+});
+
 Route::controller(RoleController::class)->group(function () {
     Route::get('role', 'index');
     Route::get('role/{role:role_id}', 'show');

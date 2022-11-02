@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -38,7 +37,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
+        $request->validate([
             'role_name' => 'required|unique:roles,role_name',
         ]);
 
@@ -55,8 +54,8 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        $roles = Role::where('role_id', $role->role_id)->first();
-        return response([$roles]);
+        $roles = Role::where('role_id', $role->role_id)->get();
+        return response($roles);
     }
 
     /**

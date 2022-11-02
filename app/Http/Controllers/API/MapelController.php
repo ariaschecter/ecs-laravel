@@ -53,6 +53,7 @@ class MapelController extends Controller
         $mapel['mapel_picture'] = $mapel_picture;
 
         Mapel::create([$mapel]);
+        return response([$mapel]);
     }
 
     /**
@@ -64,7 +65,7 @@ class MapelController extends Controller
     public function show(Mapel $mapel)
     {
         $sub_mapels = SubMapel::where('mapel_id', $mapel->mapel_id)->get();
-        return response([$sub_mapels]);
+        return response($sub_mapels);
     }
 
     /**

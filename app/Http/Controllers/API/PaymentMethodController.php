@@ -63,7 +63,11 @@ class PaymentMethodController extends Controller
      */
     public function show(PaymentMethod $paymentMethod)
     {
-        //
+        $show = PaymentMethod::where('payment_method_id', $paymentMethod->payment_method_id)->get();
+        if ($show) {
+            return ResponseFormater::success($show, 'Sukses menampilkan data Payment Method');
+        }
+        return ResponseFormater::error(false, 'Gagal menampilkan data Payment Method');
     }
 
     /**
@@ -113,8 +117,8 @@ class PaymentMethodController extends Controller
         $deleteDB = PaymentMethod::where('payment_method_id', $paymentMethod->payment_method_id)->delete();
 
         if ($deleteDB) {
-            return ResponseFormater::success(false, 'Sukses menampilkan data Payments Method');
+            return ResponseFormater::success(false, 'Sukses menghapus data Payments Method');
         }
-        return ResponseFormater::error(false, 'Gagal menampilkan data Payments Method');
+        return ResponseFormater::error(false, 'Gagal menghapus data Payments Method');
     }
 }

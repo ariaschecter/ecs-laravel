@@ -66,7 +66,7 @@ Route::controller(RoleController::class)->group(function () {
 
 Route::controller(PaymentController::class)->group(function () {
     Route::get('/payment', 'index');
-    Route::get('/payment/show', 'show');
+    Route::get('/payment/show/{payment:payment_id}', 'show');
     Route::post('/payment/add', 'store');
     Route::post('/payment/edit/{payment:payment_id}', 'update');
     Route::delete('/payment/delete/{payment:payment_id}', 'destroy');
@@ -74,7 +74,7 @@ Route::controller(PaymentController::class)->group(function () {
 
 Route::controller(PaymentMethodController::class)->group(function () {
     Route::get('/payment_method', 'index');
-    Route::get('/payment_method/show', 'show');
+    Route::get('/payment_method/show/{paymentMethod:payment_method_id}', 'show');
     Route::post('/payment_method/add', 'store');
     Route::post('/payment_method/edit/{paymentMethod:payment_method_id}', 'update');
     Route::delete('/payment_method/delete/{paymentMethod:payment_method_id}', 'destroy');

@@ -60,3 +60,12 @@ Route::controller(RoleController::class)->group(function () {
     Route::post('role/edit/{role:role_id}', 'update');
     Route::delete('role/delete/{role:role_id}', 'destroy');
 });
+
+// Route::controller(PaymentController::class)->group(function () {
+//     Route::get('/payment', 'index');
+//     Route::get('/payment/add', 'create');
+//     Route::post('/payment/add', 'store');
+//     Route::get('/payment/edit/{payment:payment_id}', 'edit');
+//     Route::post('/payment/edit/{payment:payment_id}', 'update');
+//     Route::get('/payment/delete/{payment:payment_id}', 'destroy');
+// });

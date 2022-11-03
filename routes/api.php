@@ -53,7 +53,7 @@ Route::controller(ListMapelController::class)->group(function () {
     Route::post('/list_mapel/add', 'store');
     Route::post('/list_mapel/show/(listMapel:list_mapel_id}', 'show');
     Route::post('/list_mapel/edit/{listMapel:list_mapel_id}', 'update');
-    Route::get('/list_mapel/delete/{listMapel:list_mapel_id}', 'destroy');
+    Route::delete('/list_mapel/delete/{listMapel:list_mapel_id}', 'destroy');
 });
 
 Route::controller(RoleController::class)->group(function () {
@@ -69,7 +69,7 @@ Route::controller(PaymentController::class)->group(function () {
     Route::get('/payment/show', 'show');
     Route::post('/payment/add', 'store');
     Route::post('/payment/edit/{payment:payment_id}', 'update');
-    Route::get('/payment/delete/{payment:payment_id}', 'destroy');
+    Route::delete('/payment/delete/{payment:payment_id}', 'destroy');
 });
 
 Route::controller(PaymentMethodController::class)->group(function () {
@@ -77,5 +77,5 @@ Route::controller(PaymentMethodController::class)->group(function () {
     Route::get('/payment_method/show', 'show');
     Route::post('/payment_method/add', 'store');
     Route::post('/payment_method/edit/{paymentMethod:payment_method_id}', 'update');
-    Route::get('/payment_method/delete/{paymentMethod:payment_method_id}', 'destroy');
+    Route::delete('/payment_method/delete/{paymentMethod:payment_method_id}', 'destroy');
 });

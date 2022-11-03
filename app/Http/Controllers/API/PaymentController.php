@@ -45,12 +45,20 @@ class PaymentController extends Controller
     {
         $payment = $request->validate([
             'payment_price' => 'required',
+            'user_id' => 'required',
             'payment_picture' => 'required|file|image|max:5120',
             'payment_method_id' => 'required',
         ]);
 
-        $payment['payment_picture'] = $request->file('payment_picture')->store('img/payment');
-        $payment['payment_ref'] = Str::upper(Str::random(14));
+        $payment_picture = $request->file('payment_picture')->store('img/payment');
+        $payment = [
+            'payment_method_id' => $request->payment_method_id,
+            'user_id' => $request->user_id,
+            'payment_ref' => Str::upper(Str::random(14)),
+            'payment_picture' => $payment_picture,
+            'payment_price' => $request->payment_price,
+            'payment_status' => $request->payment_status ?: 'PENDING',
+        ];
 
         $createDB = Payment::create($payment);
         if ($createDB) {

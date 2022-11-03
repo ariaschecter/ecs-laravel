@@ -48,6 +48,7 @@ class PaymentController extends Controller
     {
         $request->validate([
             'payment_price' => 'required',
+            'user_id' => 'required',
             'payment_picture' => 'required|file|image|max:5120',
             'payment_method_id' => 'required',
         ]);

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MapelController;
 use App\Http\Controllers\API\RoleController;
+use App\Http\Controllers\API\SubMapelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,14 @@ Route::controller(MapelController::class)->group(function () {
     Route::post('mapel/add', 'store');
     Route::post('mapel/edit/{mapel:mapel_id}', 'update');
     Route::delete('mapel/delete/{mapel:mapel_id}', 'destroy');
+});
+
+Route::controller(SubMapelController::class)->group(function () {
+    Route::get('/sub_mapel', 'index');
+    Route::get('/sub_mapel/show/{subMapel:sub_mapel_id}', 'show');
+    Route::post('/sub_mapel/add', 'store');
+    Route::post('/sub_mapel/edit/{subMapel:sub_mapel_id}', 'update');
+    Route::delete('/sub_mapel/delete/{subMapel:sub_mapel_id}', 'destroy');
 });
 
 Route::controller(ListMapelController::class)->group(function () {

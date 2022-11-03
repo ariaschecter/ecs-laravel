@@ -17,7 +17,10 @@ class ListMapelController extends Controller
     public function index()
     {
         $list_mapels = ListMapel::all();
-        return response($list_mapels);
+        if ($list_mapels) {
+            return ResponseFormater::success($list_mapels, 'Sukses menampilkan seluruh data');
+        }
+        return ResponseFormater::error(false, 'Gagal menampilkan seluruh data');
     }
 
     /**
@@ -47,8 +50,11 @@ class ListMapelController extends Controller
         ]);
         // add($sub_mapel);
 
-        ListMapel::create($list_mapel);
-        return response($list_mapel);
+        $createDB = ListMapel::create($list_mapel);
+        if ($createDB) {
+            return ResponseFormater::success($list_mapel, 'Sukses menambahkan data List Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal menambahkan data List Mapel');
     }
 
     /**
@@ -60,7 +66,10 @@ class ListMapelController extends Controller
     public function show(ListMapel $listMapel)
     {
         $list_mapels = ListMapel::where('list_mapel_id', $listMapel->list_mapel_id)->get();
-        response($list_mapels);
+        if ($list_mapels) {
+            return ResponseFormater::success($list_mapels, 'Sukses menampilkan data List Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal menampilkan data List Mapel');
     }
 
     /**
@@ -83,7 +92,7 @@ class ListMapelController extends Controller
      */
     public function update(Request $request, ListMapel $listMapel)
     {
-        $update = $request->validate([
+        $validate = $request->validate([
             'sub_mapel_id' => 'required',
             'list_mapel_no' => 'required',
             'list_mapel_name' => 'required',
@@ -91,8 +100,11 @@ class ListMapelController extends Controller
             'list_mapel_desc' => 'required',
         ]);
 
-        ListMapel::where('list_mapel_id', $listMapel->list_mapel_id)->update($update);
-        return response($update);
+        $updateDB = ListMapel::where('list_mapel_id', $listMapel->list_mapel_id)->update($validate);
+        if ($updateDB) {
+            return ResponseFormater::success($validate, 'Sukses memperbarui data List Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal memperbarui data List Mapel');
     }
 
     /**
@@ -103,7 +115,10 @@ class ListMapelController extends Controller
      */
     public function destroy(ListMapel $listMapel)
     {
-        ListMapel::where('list_mapel_id', $listMapel->list_mapel_id)->delete();
-        return response(['mesage' => 'data berhasil dihapus']);
+        $deleteDB = ListMapel::where('list_mapel_id', $listMapel->list_mapel_id)->delete();
+        if ($deleteDB) {
+            return ResponseFormater::success(false, 'Sukses menghapus data List Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal menghapus data List Mapel');
     }
 }

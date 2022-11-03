@@ -23,9 +23,7 @@ Route::controller(AuthController::class)->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('logout', 'logout');
-        Route::get('user', function (Request $request) {
-            return $request->user();
-        });
+        Route::get('user/show', 'showUser');
         Route::post('user/edit/{user:id}', 'updateUser');
     });
 });

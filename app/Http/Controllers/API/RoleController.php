@@ -16,7 +16,10 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return response($roles);
+        if ($roles) {
+            return ResponseFormater::success($roles, 'Sukses menampilkan data Role');
+        }
+        return ResponseFormater::error(false, 'Gagal menampilkan data Role');
     }
 
     /**
@@ -42,8 +45,12 @@ class RoleController extends Controller
         ]);
 
         $role = $request->except(['_token']);
-        Role::create($role);
-        return response([$role]);
+        $createDB = Role::create($role);
+
+        if ($createDB) {
+            return ResponseFormater::success($role, 'Sukses menambahkan data Role');
+        }
+        return ResponseFormater::error(false, 'Gagal menambahkan data Role');
     }
 
     /**
@@ -55,7 +62,10 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         $roles = Role::where('role_id', $role->role_id)->get();
-        return response($roles);
+        if ($roles) {
+            return ResponseFormater::success($roles, 'Sukses menampilkan data Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal menampilkan data Mapel');
     }
 
     /**
@@ -78,13 +88,17 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $validate = $request->validate([
+        $request->validate([
             'role_name' => 'required|unique:roles,role_name',
         ]);
 
         $roles = $request->except(['_token']);
-        Role::where('role_id', $role->role_id)->update($roles);
-        return response($roles);
+        $roleDB = Role::where('role_id', $role->role_id);
+        $updateDB = $roleDB->update($roles);
+        if ($updateDB) {
+            return ResponseFormater::success($roleDB->get(), 'Sukses memperbarui data Role');
+        }
+        return ResponseFormater::error(false, 'Gagal memperbarui data Role');
     }
 
     /**
@@ -95,7 +109,10 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        Role::where('role_id', $role->role_id)->delete();
-        return response(['mesage' => 'data role dihapus']);
+        $deleteDB = Role::where('role_id', $role->role_id)->delete();
+        if ($deleteDB) {
+            return ResponseFormater::success(false, 'Sukses menampilkan data Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal menampilkan data Mapel');
     }
 }

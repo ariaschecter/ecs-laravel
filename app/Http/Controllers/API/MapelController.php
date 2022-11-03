@@ -18,7 +18,10 @@ class MapelController extends Controller
     public function index()
     {
         $mapels = Mapel::all();
-        return response($mapels);
+        if ($mapels) {
+            return ResponseFormater::success($mapels, 'Sukses menampilkan data Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal menampilkan data Mapel');
     }
 
     /**
@@ -51,8 +54,12 @@ class MapelController extends Controller
         $mapel['mapel_slug'] = Str::slug($request->mapel_name, '-');
         $mapel['mapel_picture'] = $mapel_picture;
 
-        Mapel::create($mapel);
-        return response($mapel);
+        $createDB = Mapel::create($mapel);
+
+        if ($createDB) {
+            return ResponseFormater::success($mapel, 'Sukses menambahkan data Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal menambahkan data Mapel');
     }
 
     /**
@@ -64,7 +71,10 @@ class MapelController extends Controller
     public function show(Mapel $mapel)
     {
         $sub_mapels = Mapel::where('mapel_id', $mapel->mapel_id)->get();
-        return response($sub_mapels);
+        if ($sub_mapels) {
+            return ResponseFormater::success($sub_mapels, 'Sukses menampilkan data Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal menampilkan data Mapel');
     }
 
     /**
@@ -106,8 +116,11 @@ class MapelController extends Controller
         $update['mapel_active'] = $request->mapel_active ? '1' : '0';
 
         // dd($update);
-        Mapel::where('mapel_id', $mapel->mapel_id)->update($update);
-        return response($update);
+        $updateDB = Mapel::where('mapel_id', $mapel->mapel_id)->update($update);
+        if ($updateDB) {
+            return ResponseFormater::success($update, 'Sukses memperbarui data Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal memperbarui data Mapel');
     }
 
     /**
@@ -118,8 +131,11 @@ class MapelController extends Controller
      */
     public function destroy(Mapel $mapel)
     {
-        Mapel::where('mapel_id', $mapel->mapel_id)->delete();
-        Storage::delete($mapel->mapel_picture);
-        return response(['mesage' => 'data berhasil dihapus']);
+        $deleteDB = Mapel::where('mapel_id', $mapel->mapel_id)->delete();
+        $deleteStr = Storage::delete($mapel->mapel_picture);
+        if ($deleteDB && $deleteStr) {
+            return ResponseFormater::success(false, 'Sukses menghapus data Mapel');
+        }
+        return ResponseFormater::error(false, 'Gagal menghapus data Mapel');
     }
 }

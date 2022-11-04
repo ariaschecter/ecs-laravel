@@ -58,7 +58,7 @@ class AuthController extends Controller
 
         if (count($userDB) > 0) {
             if ($userDB[0]['active'] == 0 && $userDB[0]['role_id'] > 1) {
-                return ResponseFormater::error($userDB[0]['active'], 'Email belum diverivikasi');
+                return ResponseFormater::error(false, 'Email belum diverivikasi');
             }
         }
 

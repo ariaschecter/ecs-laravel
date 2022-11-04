@@ -62,10 +62,7 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         $roles = Role::where('role_id', $role->role_id)->get();
-        if ($roles) {
-            return ResponseFormater::success($roles, 'Sukses menampilkan data Mapel');
-        }
-        return ResponseFormater::error(false, 'Gagal menampilkan data Mapel');
+        return ResponseFormater::success($roles, 'Sukses menampilkan data Mapel');
     }
 
     /**

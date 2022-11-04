@@ -71,10 +71,7 @@ class MapelController extends Controller
     public function show(Mapel $mapel)
     {
         $sub_mapels = Mapel::where('mapel_id', $mapel->mapel_id)->get();
-        if ($sub_mapels) {
-            return ResponseFormater::success($sub_mapels, 'Sukses menampilkan data Mapel');
-        }
-        return ResponseFormater::error(false, 'Gagal menampilkan data Mapel');
+        return ResponseFormater::success($sub_mapels, 'Sukses menampilkan data Mapel');
     }
 
     /**

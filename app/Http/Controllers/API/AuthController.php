@@ -13,16 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function response($user, $message)
-    {
-        $token = $user->createToken(str()->random(30))->plainTextToken;
-        $dataWithToken = [
-            'user' => $user,
-            'token' => $token,
-            'token_type' => 'Bearer'
-        ];
-        return ResponseFormater::success($dataWithToken, $message);
-    }
     public function register(Request $request)
     {
         $request->validate([

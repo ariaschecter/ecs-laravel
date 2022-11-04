@@ -64,10 +64,7 @@ class PaymentMethodController extends Controller
     public function show(PaymentMethod $paymentMethod)
     {
         $show = PaymentMethod::where('payment_method_id', $paymentMethod->payment_method_id)->get();
-        if ($show) {
-            return ResponseFormater::success($show, 'Sukses menampilkan data Payment Method');
-        }
-        return ResponseFormater::error(false, 'Gagal menampilkan data Payment Method');
+        return ResponseFormater::success($show, 'Sukses menampilkan data Payment Method');
     }
 
     /**

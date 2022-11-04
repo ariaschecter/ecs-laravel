@@ -66,10 +66,7 @@ class ListMapelController extends Controller
     public function show(ListMapel $listMapel)
     {
         $list_mapels = ListMapel::where('list_mapel_id', $listMapel->list_mapel_id)->get();
-        if ($list_mapels) {
-            return ResponseFormater::success($list_mapels, 'Sukses menampilkan data List Mapel');
-        }
-        return ResponseFormater::error(false, 'Gagal menampilkan data List Mapel');
+        return ResponseFormater::success($list_mapels, 'Sukses menampilkan data List Mapel');
     }
 
     /**

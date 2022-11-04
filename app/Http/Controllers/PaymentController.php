@@ -48,7 +48,7 @@ class PaymentController extends Controller
     {
         $request->validate([
             'payment_price' => 'required',
-            'user_id' => 'required',
+            'id' => 'required',
             'payment_picture' => 'required|file|image|max:5120',
             'payment_method_id' => 'required',
         ]);
@@ -57,7 +57,7 @@ class PaymentController extends Controller
 
         $payment = [
             'payment_method_id' => $request->payment_method_id,
-            'user_id' => $request->user_id,
+            'id' => $request->id,
             'payment_ref' => Str::upper(Str::random(14)),
             'payment_picture' => $payment_picture,
             'payment_price' => $request->payment_price,

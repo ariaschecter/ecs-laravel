@@ -7,16 +7,18 @@
             @csrf
             <div>
                 <label for="example-select" class="form-label">Select User</label>
-                <select class="form-select" id="user_id" name="user_id">
+                <select class="form-select" id="id" name="id">
                     @foreach ($users as $user)
-                        <option value="{{ $user->user_id }}">{{ $user->user_name }}</option>
+                    <option value="{{ $user->id }}">{{ $user->user_name }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="mt-2">
                 <label for="payment_price" class="form-label">Price</label>
-                <input type="number" id="payment_price" name="payment_price" class="form-control @error('payment_price') is-invalid @enderror" value="{{ old('payment_price') }}" placeholder="Full Name">
+                <input type="number" id="payment_price" name="payment_price"
+                    class="form-control @error('payment_price') is-invalid @enderror" value="{{ old('payment_price') }}"
+                    placeholder="Full Name">
             </div>
             @error('payment_price') <div class="text-danger">{{ $message }}</div> @enderror
 
@@ -24,14 +26,16 @@
                 <label for="example-select" class="form-label">Select Payment Method</label>
                 <select class="form-select" id="payment_method_id" name="payment_method_id">
                     @foreach ($payment_methods as $payment_method)
-                        <option value="{{ $payment_method->payment_method_id }}">{{ $payment_method->payment_method_name }}</option>
+                    <option value="{{ $payment_method->payment_method_id }}">{{ $payment_method->payment_method_name }}
+                    </option>
                     @endforeach
                 </select>
             </div>
 
             <div class="mt-2">
                 <label for="payment_picture" class="form-label">Payment Picture</label>
-                <input type="file" id="payment_picture" name="payment_picture" class="form-control @error('payment_picture') is-invalid @enderror">
+                <input type="file" id="payment_picture" name="payment_picture"
+                    class="form-control @error('payment_picture') is-invalid @enderror">
             </div>
             @error('payment_picture') <div class="text-danger">{{ $message }}</div> @enderror
 

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -35,10 +37,11 @@ class AuthController extends Controller
 
         $request['password'] = Hash::make($request->password);
         $user = $request->except(['password_confirmation', '_token']);
+        $register = User::create($user);
 
-        if ($request) {
-            User::create($user);
-            return $this->response($user, 'Registration Succes');
+        if ($register) {
+            $data = User::where('email', $request->email)->get();
+            return ResponseFormater::success($data, 'Registration Succes');
         }
 
         return ResponseFormater::error($user, 'Register Gagal', 400);
@@ -51,39 +54,47 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        $userDB = User::where('email', $request->email)->get();
+
+        if ($userDB) {
+            if ($userDB[0]['active'] == 0 && $userDB[0]['role_id'] > 1) {
+                return ResponseFormater::error($userDB[0]['active'], 'Email belum diverivikasi');
+            }
+        }
+
         if (!Auth::attempt($validate)) {
-            return ResponseFormater::error(false, 'User ini tidak Terdaftar, silahkan cek kembali!', 401);
+            return ResponseFormater::error(false, 'User ini tidak Terdaftar, silahkan cek kembali!', Response::HTTP_UNAUTHORIZED);
         }
 
         $user = Auth::user();
-
-        if ($user->active == 1) {
-            return ResponseFormater::error(false, 'User ini sedang aktif!!! tidak bisa login', 400);
-        }
+        $token = $user->createToken('token')->plainTextToken;
+        $cookie = cookie('jwt', $token, 60 * 24);
 
         if (!$user) {
-            return ResponseFormater::error($user, 'Gagal Login', 400);
+            return ResponseFormater::error(false, 'Gagal Login', 400);
         }
-        User::where('email', $user->email)->update(['active' => 1]);
-        $user->active = 1;
 
-        return $this->response($user, 'Login Success');
+        return ResponseFormater::success($user, 'Login Success')->withCookie($cookie);
     }
 
     public function showUser(Request $request)
     {
-        return ResponseFormater::success($request->user(), 'User sedang login');
+        return ResponseFormater::success(Auth::user(), 'User sedang login');
     }
 
     public function updateUser(Request $request, User $user)
     {
         $validate =
             $request->validate([
-                'user_name' => 'required',
-                'email' => [Rule::unique('users')->ignore($user->id, 'id'), 'email'],
+                'user_name' => ['required', Rule::unique('users')->ignore($user->id, 'id')],
+                'email' => ['required', Rule::unique('users')->ignore($user->id, 'id'), 'email'],
+                'user_city' => 'required',
+                'user_age' => 'required',
+                'role_id' => 'required',
             ]);
-
+        // if ($request->password) {
         $validate['password'] = Hash::make($request->password);
+        // }
         $userDB = User::where('id', $user->id);
         $updateDB = $userDB->update($validate);
         unset($validate['password']);
@@ -91,13 +102,24 @@ class AuthController extends Controller
         if ($updateDB) {
             return ResponseFormater::success($userDB->get(), 'User berhasil diperbarui');
         }
-        return ResponseFormater::error($validate, 'User gagal diperbarui');
+        return ResponseFormater::error(false, 'User gagal diperbarui');
     }
 
     public function logout()
     {
-        User::where('email', Auth::user()->email)->update(['active' => 0]);
+        $cookie = Cookie::forget('jwt');
         Auth::user()->tokens()->delete();
-        return ResponseFormater::success(false, 'Anda telah logout');
+        return response([
+            'message' => 'Logout success'
+        ])->withCookie($cookie);
+    }
+
+    public function destroy(User $user)
+    {
+        $deleteDB = User::where('id', $user->id)->delete();
+        if ($deleteDB) {
+            return ResponseFormater::success(true, 'User berhasil hapus');
+        }
+        return ResponseFormater::error(false, 'User gagal hapus');
     }
 }

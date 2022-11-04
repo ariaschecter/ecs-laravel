@@ -30,6 +30,7 @@ Route::controller(AuthController::class)->group(function () {
         Route::get('/user/show', 'showUser');
         Route::post('/user/edit/{user:id}', 'updateUser');
     });
+    Route::delete('/user/delete/{user:id}', 'destroy');
 });
 
 Route::controller(MapelController::class)->group(function () {

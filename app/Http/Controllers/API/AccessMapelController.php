@@ -86,9 +86,9 @@ class AccessMapelController extends Controller
      */
     public function update(Request $request, AccessMapel $accessMapel)
     {
-        $updateDB = AccessMapel::where('access_mapel_id', $accessMapel->access_mapel_id);
-        if ($updateDB) {
-            return ResponseFormater::success($updateDB->get(), 'Sukses memperbarui data Access Model');
+        $accessmapelDB = AccessMapel::where('access_mapel_id', $accessMapel->access_mapel_id);
+        if ($accessmapelDB->update($request->all())) {
+            return ResponseFormater::success($accessmapelDB->get(), 'Sukses memperbarui data Access Model');
         }
         return ResponseFormater::error(false, 'Gagal memperbarui data Access Model');
     }
@@ -103,8 +103,8 @@ class AccessMapelController extends Controller
     {
         $deleteDB = AccessMapel::where('access_mapel_id', $accessMapel->access_mapel_id)->delete();
         if ($deleteDB) {
-            return ResponseFormater::success(false, 'Sukses memperbarui data Access Model');
+            return ResponseFormater::success(false, 'Sukses menghapus data Access Model');
         }
-        return ResponseFormater::error(false, 'Gagal memperbarui data Access Model');
+        return ResponseFormater::error(false, 'Gagal menghapus data Access Model');
     }
 }

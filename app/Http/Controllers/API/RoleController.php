@@ -16,10 +16,10 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        if ($roles) {
+        if (count($roles) > 0) {
             return ResponseFormater::success($roles, 'Sukses menampilkan data Role');
         }
-        return ResponseFormater::error(false, 'Gagal menampilkan data Role');
+        return ResponseFormater::error(false, 'Gagal menampilkan data Role!, Data kosong!!!', 404);
     }
 
     /**

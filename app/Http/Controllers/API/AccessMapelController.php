@@ -16,10 +16,10 @@ class AccessMapelController extends Controller
     public function index()
     {
         $accessMapel = AccessMapel::all();
-        if ($accessMapel) {
+        if (count($accessMapel) > 0) {
             return ResponseFormater::success($accessMapel, 'Sukses menampilkan data Access Mapel');
         }
-        return ResponseFormater::error(false, 'Gagal menampilkan data Access Mapel');
+        return ResponseFormater::error(false, 'Gagal menampilkan data Access Mapel!, Data kosong!!!', 404);
     }
 
     /**

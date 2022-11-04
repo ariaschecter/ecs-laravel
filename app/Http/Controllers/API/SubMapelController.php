@@ -16,10 +16,10 @@ class SubMapelController extends Controller
     public function index()
     {
         $sub_mapels = SubMapel::all();
-        if ($sub_mapels) {
+        if (count($sub_mapels) > 0) {
             return ResponseFormater::success($sub_mapels, 'Sukses menampilkan data Sub Mapel');
         }
-        return ResponseFormater::error(false, 'Gagal menampilkan data Sub Mapel');
+        return ResponseFormater::error(false, 'Gagal menampilkan data Sub Mapel!, Data kosong!!!', 404);
     }
 
     /**

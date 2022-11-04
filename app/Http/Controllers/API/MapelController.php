@@ -18,10 +18,10 @@ class MapelController extends Controller
     public function index()
     {
         $mapels = Mapel::all();
-        if ($mapels) {
+        if (count($mapels) > 0) {
             return ResponseFormater::success($mapels, 'Sukses menampilkan data Mapel');
         }
-        return ResponseFormater::error(false, 'Gagal menampilkan data Mapel');
+        return ResponseFormater::error(false, 'Gagal menampilkan data Mapel!, Data kosong!!!', 404);
     }
 
     /**

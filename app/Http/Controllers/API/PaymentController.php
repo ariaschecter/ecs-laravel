@@ -19,10 +19,10 @@ class PaymentController extends Controller
     public function index()
     {
         $payments = Payment::all();
-        if ($payments) {
+        if (count($payments) > 0) {
             return ResponseFormater::success($payments, 'Sukses menampilkan data Payments');
         }
-        return ResponseFormater::error(false, 'Gagal menampilkan data Payments');
+        return ResponseFormater::error(false, 'Gagal menampilkan data Payments!, Data kosong!!!', 404);
     }
 
     /**

@@ -17,10 +17,10 @@ class PaymentMethodController extends Controller
     public function index()
     {
         $paymentMethods = PaymentMethod::all();
-        if ($paymentMethods) {
+        if (count($paymentMethods) > 0) {
             return ResponseFormater::success($paymentMethods, 'Sukses menampilkan data Payments Method');
         }
-        return ResponseFormater::error(false, 'Gagal menampilkan data Payments Method');
+        return ResponseFormater::error(false, 'Gagal menampilkan data Payments Method!, Data kosong!!!', 404);
     }
 
     /**

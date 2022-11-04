@@ -18,9 +18,9 @@ class ListMapelController extends Controller
     {
         $list_mapels = ListMapel::all();
         if ($list_mapels) {
-            return ResponseFormater::success($list_mapels, 'Sukses menampilkan seluruh data');
+            return ResponseFormater::success($list_mapels, 'Sukses menampilkan seluruh data List Mapel');
         }
-        return ResponseFormater::error(false, 'Gagal menampilkan seluruh data');
+        return ResponseFormater::error(false,'Gagal menampilkan seluruh data List Mapel!, Data kosong!!!', 404);
     }
 
     /**

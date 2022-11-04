@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AccessMapelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
@@ -57,9 +58,17 @@ Route::controller(ListMapelController::class)->group(function () {
     Route::delete('/list_mapel/delete/{listMapel:list_mapel_id}', 'destroy');
 });
 
+Route::controller(AccessMapelController::class)->group(function () {
+    Route::get('/access_mapel', 'index');
+    Route::get('/access_mapel/show/{accessMapel:access_mapel_id}', 'show');
+    Route::post('/access_mapel/add', 'store');
+    Route::post('/access_mapel/edit/{accessMapel:access_mapel_id}', 'update');
+    Route::delete('/access_mapel/delete/{accessMapel:access_mapel_id}', 'destroy');
+});
+
 Route::controller(RoleController::class)->group(function () {
     Route::get('/role', 'index');
-    Route::get('/role/{role:role_id}', 'show');
+    Route::get('/role/show/{role:role_id}', 'show');
     Route::post('/role/add', 'store');
     Route::post('/role/edit/{role:role_id}', 'update');
     Route::delete('/role/delete/{role:role_id}', 'destroy');

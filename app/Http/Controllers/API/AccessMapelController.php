@@ -74,7 +74,8 @@ class AccessMapelController extends Controller
      */
     public function edit(AccessMapel $accessMapel)
     {
-        //
+        $show = AccessMapel::where('id', $accessMapel->id)->get();
+        return ResponseFormater::success($show, 'Sukses menampilkan data Access Mapel');
     }
 
     /**

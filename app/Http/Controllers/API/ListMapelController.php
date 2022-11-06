@@ -20,7 +20,7 @@ class ListMapelController extends Controller
         if ($list_mapels) {
             return ResponseFormater::success($list_mapels, 'Sukses menampilkan seluruh data List Mapel');
         }
-        return ResponseFormater::error(false,'Gagal menampilkan seluruh data List Mapel!, Data kosong!!!', 404);
+        return ResponseFormater::error(false, 'Gagal menampilkan seluruh data List Mapel!, Data kosong!!!', 404);
     }
 
     /**
@@ -77,7 +77,8 @@ class ListMapelController extends Controller
      */
     public function edit(ListMapel $listMapel)
     {
-        //
+        $list_mapels = ListMapel::where('sub_mapel_id', $listMapel->sub_mapel_id)->get();
+        return ResponseFormater::success($list_mapels, 'Sukses menampilkan data List Mapel');
     }
 
     /**

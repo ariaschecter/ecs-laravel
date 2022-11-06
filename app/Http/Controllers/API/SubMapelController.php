@@ -74,7 +74,8 @@ class SubMapelController extends Controller
      */
     public function edit(SubMapel $subMapel)
     {
-        //
+        $sub_mapels = SubMapel::where('mapel_id', $subMapel->mapel_id)->get();
+        return ResponseFormater::success($sub_mapels, 'Sukses menampilkan data Sub Mapel');
     }
 
     /**

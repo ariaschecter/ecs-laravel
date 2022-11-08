@@ -40,7 +40,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_name' => 'required',
+            'name' => 'required',
             'email' => 'required|unique:users,email',
             'user_city' => 'required',
             'user_age' => 'required',
@@ -81,7 +81,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'user_name' => ['required', Rule::unique('users')->ignore($user->id, 'id')],
+            'name' => 'required',
             'email' => ['required', Rule::unique('users')->ignore($user->id, 'id'), 'email'],
             'user_city' => 'required',
             'user_age' => 'required',

@@ -17,7 +17,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'user_name' => 'required|unique:users,user_name',
+            'name' => 'required',
             'email' => 'required|unique:users,email',
             'user_city' => 'required',
             'user_age' => 'required',
@@ -70,7 +70,7 @@ class AuthController extends Controller
     {
         $validate =
             $request->validate([
-                'user_name' => ['required', Rule::unique('users')->ignore($user->id, 'id')],
+                'name' => 'required',
                 'email' => ['required', Rule::unique('users')->ignore($user->id, 'id'), 'email'],
                 'user_city' => 'required',
                 'user_age' => 'required',

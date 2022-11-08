@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class EmailVerifyController extends Controller
 {
-    public function notice()
+    public function notice(Request $request)
     {
-        return ResponseFormater::success(true, 'Daftar berhasil!, silahkan verifikasi email anda!!!');
+        return ResponseFormater::success($request->all(), 'Daftar berhasil!, silahkan verifikasi email anda!!!');
     }
 
     public function verify(EmailVerificationRequest $request)

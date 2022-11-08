@@ -32,8 +32,7 @@ class AuthController extends Controller
 
         if ($register) {
             event(new Registered($register));
-            // Auth::attempt($user);
-            return redirect()->route('verification.notice');
+            return redirect()->route('verification.notice', ['id' => $register]);
         }
 
         return ResponseFormater::error($user, 'Register Gagal', 400);

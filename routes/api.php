@@ -4,12 +4,16 @@ use App\Http\Controllers\API\AccessMapelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\EmailVerifyController;
 use App\Http\Controllers\API\ListMapelController;
 use App\Http\Controllers\API\MapelController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PaymentMethodController;
 use App\Http\Controllers\API\RoleController;
 use App\Http\Controllers\API\SubMapelController;
+use GuzzleHttp\Middleware;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +30,18 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
 
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/logout', 'logout');
         Route::get('/user/show', 'showUser');
         Route::post('/user/edit/{user:id}', 'updateUser');
     });
     Route::delete('/user/delete/{user:id}', 'destroy');
+});
+
+Route::controller(EmailVerifyController::class)->group(function () {
+    Route::get('/email/verify/need-verify', 'notice')->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', 'verify')->Middleware('signed')->middleware('signed')->name('verification.verify');
+    Route::get('/email/verify/resend-verification', 'send')->middleware('throttle:6,1')->name('verification.send');
 });
 
 Route::controller(MapelController::class)->group(function () {
@@ -64,7 +74,7 @@ Route::controller(AccessMapelController::class)->group(function () {
     Route::get('/access_mapel', 'index');
     Route::post('/access_mapel/add', 'store');
     Route::get('/access_mapel/show/{accessMapel:access_mapel_id}', 'show');
-    Route::get('/access_mapel/show/{accessMapel:id}', 'edit');
+    Route::get('/access_mapel/show_by_user/{accessMapel:id}', 'edit');
     Route::post('/access_mapel/edit/{accessMapel:access_mapel_id}', 'update');
     Route::delete('/access_mapel/delete/{accessMapel:access_mapel_id}', 'destroy');
 });

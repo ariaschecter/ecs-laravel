@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -30,8 +31,9 @@ class AuthController extends Controller
         $register = User::create($user);
 
         if ($register) {
-            $data = User::where('email', $request->email)->get();
-            return ResponseFormater::success($data, 'Registration Succes');
+            event(new Registered($register));
+            // Auth::attempt($user);
+            return redirect()->route('verification.notice');
         }
 
         return ResponseFormater::error($user, 'Register Gagal', 400);
@@ -43,14 +45,6 @@ class AuthController extends Controller
             'email' => 'email|required',
             'password' => 'required',
         ]);
-
-        $userDB = User::where('email', $request->email)->get();
-
-        if (count($userDB) > 0) {
-            if ($userDB[0]['active'] == 0 && $userDB[0]['role_id'] > 1) {
-                return ResponseFormater::error(false, 'Email belum diverivikasi');
-            }
-        }
 
         if (!Auth::attempt($validate)) {
             return ResponseFormater::error(false, 'User ini tidak Terdaftar, silahkan cek kembali!', Response::HTTP_UNAUTHORIZED);

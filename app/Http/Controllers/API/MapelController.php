@@ -70,7 +70,7 @@ class MapelController extends Controller
      */
     public function show(Mapel $mapel)
     {
-        $sub_mapels = Mapel::where('mapel_id', $mapel->mapel_id)->get();
+        $sub_mapels = Mapel::with('sub_mapel.list_mapel')->where('mapel_id', $mapel->mapel_id)->get();
         return ResponseFormater::success($sub_mapels, 'Sukses menampilkan data Mapel');
     }
 

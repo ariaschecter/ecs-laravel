@@ -63,7 +63,7 @@ class AuthController extends Controller
 
     public function showUser(Request $request)
     {
-        return ResponseFormater::success(Auth::user(), 'User sedang login');
+        return ResponseFormater::success(User::all(), 'berhasil menampilkan users');
     }
 
     public function updateUser(Request $request, User $user)

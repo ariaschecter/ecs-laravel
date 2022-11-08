@@ -29,10 +29,10 @@ use Illuminate\Support\Facades\Auth;
 Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
+    Route::get('/user/show', 'showUser');
 
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/logout', 'logout');
-        Route::get('/user/show', 'showUser');
         Route::post('/user/edit/{user:id}', 'updateUser');
     });
     Route::delete('/user/delete/{user:id}', 'destroy');

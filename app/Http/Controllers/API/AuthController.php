@@ -50,11 +50,12 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        $token = $user->createToken('token')->plainTextToken;
-        $cookie = cookie('jwt', $token, 60 * 24);
 
-        if (!$user) {
-            return ResponseFormater::error(false, 'Gagal Login', 400);
+        if ($user->email_verified_at == null) {
+            return ResponseFormater::error(false, 'Gagal Login, Email belum di verifikasi!!!', 400);
+        } else {
+            $token = $user->createToken('token')->plainTextToken;
+            $cookie = cookie('jwt', $token, 60 * 24);
         }
 
         return ResponseFormater::success($user, 'Login Success')->withCookie($cookie);
@@ -62,7 +63,7 @@ class AuthController extends Controller
 
     public function showUser(Request $request)
     {
-        return ResponseFormater::success(User::all(), 'berhasil menampilkan users');
+        return ResponseFormater::success(Auth::user(), 'berhasil menampilkan users');
     }
 
     public function updateUser(Request $request, User $user)

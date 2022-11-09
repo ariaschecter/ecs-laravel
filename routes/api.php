@@ -39,9 +39,9 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::controller(EmailVerifyController::class)->group(function () {
-    Route::get('/email/verify/need-verify', 'notice')->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', 'verify')->Middleware('signed')->middleware('signed')->name('verification.verify');
-    Route::get('/email/verify/resend-verification', 'send')->middleware('throttle:6,1')->name('verification.send');
+    Route::get('/email/verify/need-verify', 'notice')->middleware('auth:sanctum')->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', 'verify')->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
+    Route::get('/email/verify/resend-verification', 'send')->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
 });
 
 Route::controller(MapelController::class)->group(function () {

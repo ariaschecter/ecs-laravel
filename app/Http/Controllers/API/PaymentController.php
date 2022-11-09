@@ -75,7 +75,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        $show = Payment::where('payment_id', $payment->payment_id)->get();
+        $show = Payment::with(['payment_method', 'user'])->where('payment_id', $payment->payment_id)->get();
         return ResponseFormater::success($show, 'Sukses menampilkan data Payment');
     }
 

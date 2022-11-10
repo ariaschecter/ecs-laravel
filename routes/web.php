@@ -87,5 +87,3 @@ Route::controller(PaymentMethodController::class)->group(function () {
     Route::post('/payment_method/edit/{payment_method:payment_method_id}', 'update');
     Route::get('/payment_method/delete/{payment_method:payment_method_id}', 'destroy');
 });
-
-

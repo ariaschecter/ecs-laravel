@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\API\AccessMapelController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\EmailVerifyController;
@@ -11,9 +10,6 @@ use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PaymentMethodController;
 use App\Http\Controllers\API\RoleController;
 use App\Http\Controllers\API\SubMapelController;
-use GuzzleHttp\Middleware;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,10 +34,10 @@ Route::controller(AuthController::class)->group(function () {
     Route::delete('/user/delete/{user:id}', 'destroy');
 });
 
-Route::controller(EmailVerifyController::class)->group(function () {
-    Route::get('/email/verify/need-verify', 'notice')->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', 'verify')->middleware('signed')->name('verification.verify');
-    Route::get('/email/verify/resend-verification', 'send')->middleware('throttle:6,1')->name('verification.send');
+Route::controller(EmailVerifyController::class)->middleware('auth:sanctum')->group(function () {
+    Route::get('/email/verify', 'notice')->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', 'verify')->name('verification.verify');
+    Route::get('/email/verify/resend-verification', 'send')->name('verification.send');
 });
 
 Route::controller(MapelController::class)->group(function () {

@@ -18,7 +18,7 @@
                             <th data-field="id" data-sortable="true">#</th>
                             <th data-field="payment_ref" data-sortable="true">Ref</th>
                             <th data-field="Picture">Picture</th>
-                            <th data-field="user_name" data-sortable="true">User Name</th>
+                            <th data-field="name" data-sortable="true">Email</th>
                             <th data-field="payment_price" data-sortable="true">Price</th>
                             <th data-field="user_city" data-sortable="true">Status</th>
                             <th data-field="action" data-sortable="false">Action</th>
@@ -33,8 +33,8 @@
                             <td>{{ $i++ }}</td>
                             <td>#{{ $payment->payment_ref }}</td>
                             <td><img src="{{ asset('storage/' . $payment->payment_picture) }}"
-                                    alt="{{ 'Foto '. $payment->user->user_name }}" class="" width="75"></td>
-                            <td>{{ $payment->user->user_name }}</td>
+                                    alt="{{ 'Foto '. $payment->user->name }}" class="" width="75"></td>
+                            <td>{{ $payment->user->email }}</td>
                             <td>Rp. {{ number_format($payment->payment_price, 0) }}</td>
                             <td>{{ $payment->payment_status }}</td>
                             <td>

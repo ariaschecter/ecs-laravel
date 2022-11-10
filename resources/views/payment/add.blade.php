@@ -9,7 +9,7 @@
                 <label for="example-select" class="form-label">Select User</label>
                 <select class="form-select" id="id" name="id">
                     @foreach ($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->user_name }}</option>
+                    <option value="{{ $user->id }}">{{ $user->email }}</option>
                     @endforeach
                 </select>
             </div>
@@ -18,7 +18,7 @@
                 <label for="payment_price" class="form-label">Price</label>
                 <input type="number" id="payment_price" name="payment_price"
                     class="form-control @error('payment_price') is-invalid @enderror" value="{{ old('payment_price') }}"
-                    placeholder="Full Name">
+                    placeholder="count price">
             </div>
             @error('payment_price') <div class="text-danger">{{ $message }}</div> @enderror
 

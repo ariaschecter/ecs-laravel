@@ -7,25 +7,33 @@
             @csrf
             <div>
                 <label for="payment_ref" class="form-label">Payment Reff</label>
-                <input type="text" id="payment_ref" name="payment_ref" readonly class="form-control @error('payment_ref') is-invalid @enderror" value="#{{ $payment->payment_ref }}" placeholder="Payment Ref">
+                <input type="text" id="payment_ref" name="payment_ref" readonly
+                    class="form-control @error('payment_ref') is-invalid @enderror" value="#{{ $payment->payment_ref }}"
+                    placeholder="Payment Ref">
             </div>
             @error('payment_ref') <div class="text-danger">{{ $message }}</div> @enderror
 
             <div class="mt-2">
                 <label for="email" class="form-label">Email</label>
-                <input type="text" id="email" name="email" readonly class="form-control @error('email') is-invalid @enderror" value="{{ $payment->user->email }}" placeholder="Email">
+                <input type="text" id="email" name="email" readonly
+                    class="form-control @error('email') is-invalid @enderror" value="{{ $payment->user->email }}"
+                    placeholder="Email">
             </div>
             @error('email') <div class="text-danger">{{ $message }}</div> @enderror
 
             <div class="mt-2">
                 <label for="payment_method" class="form-label">Payment Method</label>
-                <input type="text" id="payment_method" name="payment_method" readonly class="form-control @error('payment_method') is-invalid @enderror" value="{{ $payment->payment_method->payment_method_name }}" placeholder="Umur">
+                <input type="text" id="payment_method" name="payment_method" readonly
+                    class="form-control @error('payment_method') is-invalid @enderror"
+                    value="{{ $payment->payment_method->payment_method_name }}" placeholder="Umur">
             </div>
             @error('payment_method') <div class="text-danger">{{ $message }}</div> @enderror
 
             <div class="mt-2">
                 <label for="payment_price" class="form-label">Payment Price</label>
-                <input type="text" id="payment_price" name="payment_price" readonly class="form-control @error('payment_price') is-invalid @enderror" value="{{ $payment->payment_price }}" placeholder="Kabupaten/Kota">
+                <input type="text" id="payment_price" name="payment_price" readonly
+                    class="form-control @error('payment_price') is-invalid @enderror"
+                    value="{{ $payment->payment_price }}" placeholder="Kabupaten/Kota">
             </div>
             @error('payment_price') <div class="text-danger">{{ $message }}</div> @enderror
 

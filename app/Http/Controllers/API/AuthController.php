@@ -31,8 +31,9 @@ class AuthController extends Controller
         $register = User::create($user);
 
         if ($register) {
-            event(new Registered($register));
-            return redirect()->route('verification.notice', ['id' => $register]);
+            event(new Registered($register)); //send email verification
+
+            return ResponseFormater::success($register, 'Registrasi Berhasil silahkan login');
         }
 
         return ResponseFormater::error($user, 'Register Gagal', 400);
@@ -50,14 +51,13 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+        $token = $user->createToken('token')->plainTextToken;
+        $cookie = cookie('jwt', $token, 60 * 24);
+
 
         if ($user->email_verified_at == null) {
-            return ResponseFormater::error(false, 'Gagal Login, Email belum di verifikasi!!!', 400);
-        } else {
-            $token = $user->createToken('token')->plainTextToken;
-            $cookie = cookie('jwt', $token, 60 * 24);
+            return ResponseFormater::error(false, 'Login Success, Email belum di verifikasi!!!', 400)->withCookie($cookie);
         }
-
         return ResponseFormater::success($user, 'Login Success')->withCookie($cookie);
     }
 

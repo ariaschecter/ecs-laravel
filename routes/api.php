@@ -6,6 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\EmailVerifyController;
 use App\Http\Controllers\API\ListMapelController;
 use App\Http\Controllers\API\MapelController;
+use App\Http\Controllers\API\NewPasswordController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PaymentMethodController;
 use App\Http\Controllers\API\RoleController;
@@ -27,7 +28,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/user/show', 'showUser');
+        Route::get('/user/show', 'showUser')->middleware('verified');
         Route::get('/logout', 'logout');
         Route::post('/user/edit/{user:id}', 'updateUser');
     });
@@ -39,8 +40,10 @@ Route::controller(EmailVerifyController::class)->middleware('auth:sanctum')->gro
     Route::get('/email/verify/{id}/{hash}', 'verify')->name('verification.verify');
     Route::get('/email/verify/resend-verification', 'send')->name('verification.send');
 });
-Route::get('/email/view', function () {
-    return view('email_verify.index');
+
+Route::controller(NewPasswordController::class)->group(function () {
+    Route::post('/forgot-password', 'forgotPassword');
+    Route::post('/reset-password', 'reset');
 });
 
 Route::controller(MapelController::class)->group(function () {

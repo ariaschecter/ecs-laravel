@@ -39,6 +39,9 @@ Route::controller(EmailVerifyController::class)->middleware('auth:sanctum')->gro
     Route::get('/email/verify/{id}/{hash}', 'verify')->name('verification.verify');
     Route::get('/email/verify/resend-verification', 'send')->name('verification.send');
 });
+Route::get('/email/view', function () {
+    return view('email_verify.index');
+});
 
 Route::controller(MapelController::class)->group(function () {
     Route::get('/mapel', 'index');

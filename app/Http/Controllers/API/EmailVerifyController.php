@@ -11,6 +11,9 @@ class EmailVerifyController extends Controller
 {
     public function notice(Request $request)
     {
+        if ($request->user()->hasVerifiedEmail()) {
+            return ResponseFormater::error(false, 'Already Verified', 400);
+        }
         return ResponseFormater::success($request->all(), 'Daftar berhasil!, silahkan login dan verifikasi email anda!!!');
     }
 
@@ -32,7 +35,7 @@ class EmailVerifyController extends Controller
         if ($request->user()->hasVerifiedEmail()) {
             return ResponseFormater::error(false, 'Already Verified', 400);
         }
-        $request->user()->sendEmailVerification();
+        $request->user()->sendEmailVerificationNotification();
         return ResponseFormater::success(true, 'Verifikasi email berhasil dikirim');
     }
 }

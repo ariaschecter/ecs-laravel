@@ -54,10 +54,6 @@ class AuthController extends Controller
         $token = $user->createToken('token')->plainTextToken;
         $cookie = cookie('jwt', $token, 60 * 24);
 
-
-        if ($user->email_verified_at == null) {
-            return ResponseFormater::error(false, 'Login Success, Email belum di verifikasi!!!', 400)->withCookie($cookie);
-        }
         return ResponseFormater::success($user, 'Login Success')->withCookie($cookie);
     }
 

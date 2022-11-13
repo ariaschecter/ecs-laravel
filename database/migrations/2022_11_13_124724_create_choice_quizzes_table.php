@@ -14,7 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('choice_quizzes', function (Blueprint $table) {
-            $table->id();
+            $table->id('choice_id');
+            $table->foreignId('question_id');
+            $table->string('choice_name');
+            $table->integer('choice_score')->default(0);
             $table->timestamps();
         });
     }

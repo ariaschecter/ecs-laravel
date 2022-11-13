@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('question_quizzes', function (Blueprint $table) {
-            $table->id();
+            $table->id('question_id');
+            $table->string('sub_mapel_id');
+            $table->string('question');
             $table->timestamps();
         });
     }

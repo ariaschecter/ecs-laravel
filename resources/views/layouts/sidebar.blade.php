@@ -78,6 +78,23 @@
                     </div>
                 </li>
                 <li>
+                    <a href="#sidebarquiz" data-bs-toggle="collapse">
+                        <i data-feather="airplay"></i>
+                        <span> Quiz </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarquiz">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="/question">Question</a>
+                            </li>
+                            <li>
+                                <a href="/choice">Choice</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
                     <a href="#">
                         <i data-feather="calendar"></i>
                         <span> Mapel Akses </span>

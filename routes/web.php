@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChoiceQuizController;
 use App\Http\Controllers\ListMapelController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\PaymentController;
@@ -7,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\QuestionQuizController;
 use App\Http\Controllers\SubMapelController;
 
 /*
@@ -50,6 +52,24 @@ Route::controller(ListMapelController::class)->group(function () {
     Route::get('/list_mapel/edit/{list_mapel:list_mapel_id}', 'edit');
     Route::post('/list_mapel/edit/{list_mapel:list_mapel_id}', 'update');
     Route::get('/list_mapel/delete/{list_mapel:list_mapel_id}', 'destroy');
+});
+
+Route::controller(QuestionQuizController::class)->group(function () {
+    Route::get('/question', 'index');
+    Route::get('/question/add', 'create');
+    Route::post('/question/add', 'store');
+    Route::get('/question/edit/{question:question_id}', 'edit');
+    Route::post('/question/edit/{question:question_id}', 'update');
+    Route::get('/question/delete/{question:question_id}', 'destroy');
+});
+
+Route::controller(ChoiceQuizController::class)->group(function () {
+    Route::get('/choice', 'index');
+    Route::get('/choice/add', 'create');
+    Route::post('/choice/add', 'store');
+    Route::get('/choice/edit/{choice:choice_id}', 'edit');
+    Route::post('/choice/edit/{choice:choice_id}', 'update');
+    Route::get('/choice/delete/{choice:choice_id}', 'destroy');
 });
 
 Route::controller(UserController::class)->group(function () {

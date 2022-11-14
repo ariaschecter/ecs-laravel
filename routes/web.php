@@ -58,18 +58,18 @@ Route::controller(QuestionQuizController::class)->group(function () {
     Route::get('/question', 'index');
     Route::get('/question/add', 'create');
     Route::post('/question/add', 'store');
-    Route::get('/question/edit/{question:question_id}', 'edit');
-    Route::post('/question/edit/{question:question_id}', 'update');
-    Route::get('/question/delete/{question:question_id}', 'destroy');
+    Route::get('/question/edit/{question_quiz:question_id}', 'edit');
+    Route::post('/question/edit/{question_quiz:question_id}', 'update');
+    Route::get('/question/delete/{question_quiz:question_id}', 'destroy');
 });
 
 Route::controller(ChoiceQuizController::class)->group(function () {
     Route::get('/choice', 'index');
     Route::get('/choice/add', 'create');
     Route::post('/choice/add', 'store');
-    Route::get('/choice/edit/{choice:choice_id}', 'edit');
-    Route::post('/choice/edit/{choice:choice_id}', 'update');
-    Route::get('/choice/delete/{choice:choice_id}', 'destroy');
+    Route::get('/choice/edit/{choice_quiz:choice_id}', 'edit');
+    Route::post('/choice/edit/{choice_quiz:choice_id}', 'update');
+    Route::get('/choice/delete/{choice_quiz:choice_id}', 'destroy');
 });
 
 Route::controller(UserController::class)->group(function () {

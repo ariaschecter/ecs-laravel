@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id('access_mapel_id');
             $table->foreignId('id');
             $table->foreignId('mapel_id');
-            $table->integer('count_sub_mapel');
-            $table->integer('count_list_mapel');
+            $table->integer('last_access');
             $table->timestamps();
         });
     }

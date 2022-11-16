@@ -61,6 +61,8 @@ Route::controller(QuestionQuizController::class)->group(function () {
     Route::get('/question/edit/{question_quiz:question_id}', 'edit');
     Route::post('/question/edit/{question_quiz:question_id}', 'update');
     Route::get('/question/delete/{question_quiz:question_id}', 'destroy');
+    Route::get('/quiz', 'quiz');
+    Route::post('/quiz', 'result');
 });
 
 Route::controller(ChoiceQuizController::class)->group(function () {

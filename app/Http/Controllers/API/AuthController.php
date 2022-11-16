@@ -47,7 +47,7 @@ class AuthController extends Controller
         ]);
 
         if (!Auth::attempt($validate)) {
-            return ResponseFormater::error(false, 'User ini tidak Terdaftar, silahkan cek kembali!', Response::HTTP_UNAUTHORIZED);
+            return ResponseFormater::error(false, 'Email atau Password salah!!, silahkan cek kembali!', Response::HTTP_UNAUTHORIZED);
         }
 
         $user = Auth::user();

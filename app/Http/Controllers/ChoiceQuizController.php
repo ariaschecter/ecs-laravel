@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ChoiceQuiz;
 use App\Models\QuestionQuiz;
+use App\Models\SubMapel;
 use Illuminate\Http\Request;
 
 class ChoiceQuizController extends Controller
@@ -15,8 +16,8 @@ class ChoiceQuizController extends Controller
      */
     public function index()
     {
-        $list_mapels = ChoiceQuiz::all();
-        return view('list_mapel.index')->with('list_mapels', $list_mapels);
+        $choice_quizs = ChoiceQuiz::with('question')->orderBy('question_id', 'DESC')->get();
+        return view('choice.index')->with('choice_quizs', $choice_quizs);
     }
 
     /**
@@ -26,9 +27,8 @@ class ChoiceQuizController extends Controller
      */
     public function create()
     {
-        $sub_mapels = QuestionQuiz::all();
-        // dd($sub_mapels);
-        return view('list_mapel.add')->with('sub_mapels', $sub_mapels);
+        $questions = QuestionQuiz::all();
+        return view('choice.add')->with('questions', $questions);
     }
 
     /**
@@ -39,18 +39,14 @@ class ChoiceQuizController extends Controller
      */
     public function store(Request $request)
     {
-        $list_mapel = $request->validate([
-            'sub_mapel_id' => 'required',
-            'list_mapel_no' => 'required',
-            'list_mapel_name' => 'required',
-            'list_mapel_link' => 'required',
-            'list_mapel_desc' => 'required',
+        $request->validate([
+            'choice_name' => 'required',
         ]);
-        // dd($sub_mapel);
 
-        ChoiceQuiz::create($list_mapel);
-        $sub_mapel = QuestionQuiz::where('sub_mapel_id', $request->sub_mapel_id)->first();
-        return redirect('mapel/show/' . $sub_mapel->mapel_id);
+        $choice_quiz = $request->except('_token');
+
+        ChoiceQuiz::create($choice_quiz);
+        return redirect('choice/');
     }
 
     /**
@@ -59,12 +55,12 @@ class ChoiceQuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ChoiceQuiz $list_mapel)
+    public function edit(ChoiceQuiz $choice_quiz)
     {
-        $sub_mapels = QuestionQuiz::all();
-        return view('list_mapel.edit')->with([
-            'list_mapel' => $list_mapel,
-            'sub_mapels' => $sub_mapels,
+        $questions = QuestionQuiz::all();
+        return view('choice.edit')->with([
+            'choice' => $choice_quiz,
+            'questions' => $questions,
         ]);
     }
 
@@ -75,19 +71,19 @@ class ChoiceQuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ChoiceQuiz $list_mapel)
+    public function update(Request $request, ChoiceQuiz $choice_quiz)
     {
-        $update = $request->validate([
-            'sub_mapel_id' => 'required',
-            'list_mapel_no' => 'required',
-            'list_mapel_name' => 'required',
-            'list_mapel_link' => 'required',
-            'list_mapel_desc' => 'required',
+        $request->validate([
+            'choice_name' => 'required',
         ]);
 
-        ChoiceQuiz::where('list_mapel_id', $list_mapel->list_mapel_id)->update($update);
-        $sub_mapel = QuestionQuiz::where('sub_mapel_id', $request->sub_mapel_id)->first();
-        return redirect('mapel/show/' . $sub_mapel->mapel_id);
+        $update = $request->except('_token');
+        $update['choice_score'] = $request->choice_score ? 1 : 0;
+
+        // dd($update);
+
+        ChoiceQuiz::where('choice_id', $choice_quiz->choice_id)->update($update);
+        return redirect('choice/');
     }
 
     /**
@@ -96,10 +92,10 @@ class ChoiceQuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ChoiceQuiz $list_mapel)
+    public function destroy(ChoiceQuiz $choice_quiz)
     {
-        ChoiceQuiz::where('list_mapel_id', $list_mapel->list_mapel_id)->delete();
-        $sub_mapel = QuestionQuiz::where('sub_mapel_id', $list_mapel->sub_mapel_id)->first();
-        return redirect('mapel/show/' . $sub_mapel->mapel_id);
+        ChoiceQuiz::where('question_id', $choice_quiz->choice_id)->delete();
+        return redirect('choice/');
     }
 }
+

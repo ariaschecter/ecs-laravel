@@ -95,6 +95,12 @@
                     </div>
                 </li>
                 <li>
+                    <a href="/quiz">
+                        <i data-feather="calendar"></i>
+                        <span> Coba Quiz </span>
+                    </a>
+                </li>
+                <li>
                     <a href="#">
                         <i data-feather="calendar"></i>
                         <span> Mapel Akses </span>

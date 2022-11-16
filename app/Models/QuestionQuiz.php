@@ -14,4 +14,8 @@ class QuestionQuiz extends Model
     public function sub_mapel() {
         return $this->belongsTo(SubMapel::class, 'sub_mapel_id', 'sub_mapel_id');
     }
+
+    public function choice() {
+        return $this->hasMany(ChoiceQuiz::class, 'question_id', 'question_id');
+    }
 }

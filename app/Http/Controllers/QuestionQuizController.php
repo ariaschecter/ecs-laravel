@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChoiceQuiz;
 use App\Models\QuestionQuiz;
 use App\Models\SubMapel;
 use Illuminate\Http\Request;
@@ -91,5 +92,25 @@ class QuestionQuizController extends Controller
     {
         QuestionQuiz::where('question_id', $question_quiz->question_id)->delete();
         return redirect('question/');
+    }
+
+    public function quiz() {
+        $quizs = QuestionQuiz::with('choice')->get();
+        return view('question.quiz')->with([
+            'questions' => $quizs,
+        ]);
+    }
+
+    public function result(Request $request) {
+        $results = $request->except('_token');
+        $soal = 0;
+        $benar = 0;
+        foreach($results as $result) {
+            $score = ChoiceQuiz::where('choice_id', $result)->first();
+            $benar += $score->choice_score;
+            $soal++;
+        }
+
+        return $benar * 100 / $soal;
     }
 }

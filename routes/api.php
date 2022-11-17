@@ -105,3 +105,21 @@ Route::controller(PaymentMethodController::class)->group(function () {
     Route::post('/payment_method/edit/{paymentMethod:payment_method_id}', 'update');
     Route::delete('/payment_method/delete/{paymentMethod:payment_method_id}', 'destroy');
 });
+
+Route::controller(ChoiceQuizController::class)->group(function () {
+    Route::get('/choice', 'index');
+    Route::get('/choice/add', 'create');
+    Route::post('/choice/add', 'store');
+    Route::post('/choice/edit/{choice_quiz:choice_id}', 'update');
+    Route::get('/choice/delete/{choice_quiz:choice_id}', 'destroy');
+});
+
+Route::controller(QuestionQuizController::class)->group(function () {
+    Route::get('/question', 'index');
+    Route::get('/question/add', 'create');
+    Route::post('/question/add', 'store');
+    Route::post('/question/edit/{question_quiz:question_id}', 'update');
+    Route::get('/question/delete/{question_quiz:question_id}', 'destroy');
+    Route::get('/quiz', 'quiz');
+    Route::post('/quiz', 'result');
+});

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Auth;
 
+use App\Http\Controllers\API\ResponseFormater;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -24,9 +25,7 @@ class NewPasswordController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return [
-                'status' => __($status),
-            ];
+            return ResponseFormater::success('success', __($status));
         }
 
         throw ValidationException::withMessages([
@@ -57,13 +56,9 @@ class NewPasswordController extends Controller
         );
 
         if ($status == Password::PASSWORD_RESET) {
-            return response([
-                'message' => 'Password reset successfully'
-            ]);
+            return ResponseFormater::success(true, 'Password reset successfully');
         }
 
-        return response([
-            'message' => __($status)
-        ], 500);
+        return ResponseFormater::error(false, __($status), 500);
     }
 }

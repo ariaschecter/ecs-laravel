@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Auth;
 
+use App\Http\Controllers\API\ResponseFormater;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -72,12 +74,18 @@ class AuthController extends Controller
                 'user_age' => 'required',
                 'role_id' => 'required',
             ]);
-        // if ($request->password) {
-        $validate['password'] = Hash::make($request->password);
-        // }
+
+        if ($request->user_picture) {
+            if (Storage::get($user->user_picture)) {
+                Storage::delete($user->user_picture);
+            }
+            $user_picture = $request->file('mapel_picture')->store('img/mapel');
+        } else {
+            $user_picture = $user->user_picture;
+        }
+        $validate['user_picture'] = $user_picture;
         $userDB = User::where('id', $user->id);
         $updateDB = $userDB->update($validate);
-        unset($validate['password']);
 
         if ($updateDB) {
             return ResponseFormater::success($userDB->get(), 'User berhasil diperbarui');

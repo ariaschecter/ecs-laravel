@@ -2,11 +2,12 @@
 
 use App\Http\Controllers\API\AccessMapelController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\EmailVerifyController;
+use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\Auth\EmailVerifyController;
+use App\Http\Controllers\API\Auth\NewPasswordController;
+use App\Http\Controllers\API\Auth\UpdatePasswordController;
 use App\Http\Controllers\API\ListMapelController;
 use App\Http\Controllers\API\MapelController;
-use App\Http\Controllers\API\NewPasswordController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PaymentMethodController;
 use App\Http\Controllers\API\RoleController;
@@ -45,6 +46,8 @@ Route::controller(NewPasswordController::class)->group(function () {
     Route::post('/forgot-password', 'forgotPassword');
     Route::post('/reset-password', 'reset');
 });
+
+Route::post('/update-password', [UpdatePasswordController::class, 'resetPassword'])->middleware(['auth:sanctum', 'verified']);
 
 Route::controller(MapelController::class)->group(function () {
     Route::get('/mapel', 'index');

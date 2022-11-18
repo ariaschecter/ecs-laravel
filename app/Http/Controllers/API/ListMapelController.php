@@ -100,7 +100,8 @@ class ListMapelController extends Controller
 
         $updateDB = ListMapel::where('list_mapel_id', $listMapel->list_mapel_id)->update($validate);
         if ($updateDB) {
-            return ResponseFormater::success($validate, 'Sukses memperbarui data List Mapel');
+            return ResponseFormater::success($validate, 'Sukses memperbarui data List Mapel
+    console.log(this.list_mapel_cache);');
         }
         return ResponseFormater::error(false, 'Gagal memperbarui data List Mapel');
     }

@@ -43,8 +43,7 @@ class AccessMapelController extends Controller
         $create = $request->validate([
             'id' => 'required',
             'mapel_id' => 'required',
-            'count_sub_mapel' => 'required',
-            'count_list_mapel' => 'required',
+            'last_access' => 'required',
         ]);
 
         $createDB = AccessMapel::create($create);

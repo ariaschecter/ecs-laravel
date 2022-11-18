@@ -70,6 +70,7 @@ class AuthController extends Controller
             $request->validate([
                 'name' => 'required',
                 'email' => ['required', Rule::unique('users')->ignore($user->id, 'id'), 'email'],
+                'user_picture' => 'file|image|max:5120',
                 'user_city' => 'required',
                 'user_age' => 'required',
                 'role_id' => 'required',
@@ -79,11 +80,9 @@ class AuthController extends Controller
             if (Storage::get($user->user_picture)) {
                 Storage::delete($user->user_picture);
             }
-            $user_picture = $request->file('mapel_picture')->store('img/mapel');
-        } else {
-            $user_picture = $user->user_picture;
+            $validate['user_picture'] = $request->file('mapel_picture')->store('img/mapel');
         }
-        $validate['user_picture'] = $user_picture;
+
         $userDB = User::where('id', $user->id);
         $updateDB = $userDB->update($validate);
 
@@ -96,7 +95,6 @@ class AuthController extends Controller
     public function logout()
     {
         $cookie = Cookie::forget('jwt');
-        Auth::user()->tokens()->delete();
         return response([
             'message' => 'Logout success'
         ])->withCookie($cookie);

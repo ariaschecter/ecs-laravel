@@ -40,6 +40,7 @@ class ChoiceQuizController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'question_id' => 'required',
             'choice_name' => 'required',
         ]);
 
@@ -59,6 +60,7 @@ class ChoiceQuizController extends Controller
     public function update(Request $request, ChoiceQuiz $choiceQuiz)
     {
         $request->validate([
+            'question_id' => 'required',
             'choice_name' => 'required',
         ]);
 
@@ -79,6 +81,7 @@ class ChoiceQuizController extends Controller
      */
     public function destroy(ChoiceQuiz $choiceQuiz)
     {
+        dd($choiceQuiz);
         ChoiceQuiz::where('question_id', $choiceQuiz->choice_id)->delete();
         return ResponseFormater::success(true, 'berhasil menghapus data Choice Quiz');
     }

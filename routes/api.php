@@ -6,10 +6,12 @@ use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Auth\EmailVerifyController;
 use App\Http\Controllers\API\Auth\NewPasswordController;
 use App\Http\Controllers\API\Auth\UpdatePasswordController;
+use App\Http\Controllers\API\ChoiceQuizController;
 use App\Http\Controllers\API\ListMapelController;
 use App\Http\Controllers\API\MapelController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PaymentMethodController;
+use App\Http\Controllers\API\QuestionQuizController;
 use App\Http\Controllers\API\RoleController;
 use App\Http\Controllers\API\SubMapelController;
 
@@ -111,18 +113,18 @@ Route::controller(PaymentMethodController::class)->group(function () {
 
 Route::controller(ChoiceQuizController::class)->group(function () {
     Route::get('/choice', 'index');
-    Route::get('/choice/add', 'create');
+    Route::get('/choice/show', 'create');
     Route::post('/choice/add', 'store');
-    Route::post('/choice/edit/{choice_quiz:choice_id}', 'update');
-    Route::get('/choice/delete/{choice_quiz:choice_id}', 'destroy');
+    Route::post('/choice/edit/{choiceQuiz:choice_id}', 'update');
+    Route::delete('/choice/delete/{choiceQuiz:choice_id}', 'destroy');
 });
 
 Route::controller(QuestionQuizController::class)->group(function () {
     Route::get('/question', 'index');
-    Route::get('/question/add', 'create');
+    Route::get('/question/show', 'create');
     Route::post('/question/add', 'store');
-    Route::post('/question/edit/{question_quiz:question_id}', 'update');
-    Route::get('/question/delete/{question_quiz:question_id}', 'destroy');
+    Route::post('/question/edit/{questionQuiz:question_id}', 'update');
+    Route::delete('/question/delete/{questionQuiz:question_id}', 'destroy');
     Route::get('/quiz', 'quiz');
     Route::post('/quiz', 'result');
 });

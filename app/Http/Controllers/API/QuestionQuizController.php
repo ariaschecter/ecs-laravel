@@ -96,7 +96,6 @@ class QuestionQuizController extends Controller
             $benar += $score->choice_score;
             $soal++;
         }
-
         return ResponseFormater::success($benar * 100 / $soal, 'Sukses result');
     }
 }

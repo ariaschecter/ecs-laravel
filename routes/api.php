@@ -13,6 +13,7 @@ use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PaymentMethodController;
 use App\Http\Controllers\API\QuestionQuizController;
 use App\Http\Controllers\API\RoleController;
+use App\Http\Controllers\API\ScoreQuizController;
 use App\Http\Controllers\API\SubMapelController;
 
 /*
@@ -127,4 +128,12 @@ Route::controller(QuestionQuizController::class)->group(function () {
     Route::delete('/question/delete/{questionQuiz:question_id}', 'destroy');
     Route::get('/quiz', 'quiz');
     Route::post('/quiz', 'result');
+});
+
+Route::controller(ScoreQuizController::class)->group(function () {
+    Route::get('/score', 'index');
+    Route::get('/score/show/{scoreQuiz:id}', 'create');
+    Route::post('/score/add', 'store');
+    Route::post('/score/edit/{scoreQuiz:score_id}', 'update');
+    Route::delete('/score/delete/{scoreQuiz:score_id}', 'destroy');
 });

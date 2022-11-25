@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ScoreQuizController;
 use App\Http\Controllers\ChoiceQuizController;
 use App\Http\Controllers\ListMapelController;
 use App\Http\Controllers\MapelController;
@@ -108,4 +109,13 @@ Route::controller(PaymentMethodController::class)->group(function () {
     Route::get('/payment_method/edit/{payment_method:payment_method_id}', 'edit');
     Route::post('/payment_method/edit/{payment_method:payment_method_id}', 'update');
     Route::get('/payment_method/delete/{payment_method:payment_method_id}', 'destroy');
+});
+
+Route::controller(ScoreQuizController::class)->group(function () {
+    Route::get('/score', 'index');
+    Route::get('/score/show/{scoreQuiz:id}', 'create');
+    Route::post('/score/add', 'store');
+    Route::get('/score/edit/{scoreQuiz:score_id}', 'edit');
+    Route::post('/score/update/{scoreQuiz:score_id}', 'update');
+    Route::delete('/score/delete/{scoreQuiz:score_id}', 'destroy');
 });

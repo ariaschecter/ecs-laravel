@@ -39,19 +39,11 @@ class ScoreQuizController extends Controller
      */
     public function store(Request $request)
     {
-        $results = $request->except(['id', 'sub_mapel_id', '_token']);
-        $soal = 0;
-        $benar = 0;
-        foreach ($results as $result) {
-            $score = ChoiceQuiz::where('choice_id', $result)->first();
-            $benar += $score->choice_score;
-            $soal++;
-        }
-        $score = [
-            'id' => $request->id,
-            'sub_mapel_id' => $request->sub_mapel_id,
-            'score' => $benar * 100 / $soal,
-        ];
+        $score = $request->validate([
+            'id' => 'required',
+            'sub_mapel' => 'required',
+            'score' => 'required',
+        ]);
         $create_score = ScoreQuiz::create($score);
         return ResponseFormater::success($create_score, 'Sukses menambahkan nilai');
     }

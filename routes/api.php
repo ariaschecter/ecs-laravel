@@ -31,13 +31,15 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
 
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/user/show', 'showUser')->middleware('verified');
+    Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+        Route::get('/user/show', 'showUser');
         Route::get('/logout', 'logout');
         Route::post('/user/edit/{user:id}', 'updateUser');
+        Route::delete('/user/delete/{user:id}', 'destroy');
     });
-    Route::delete('/user/delete/{user:id}', 'destroy');
 });
+
+Route::post('/update-password', [UpdatePasswordController::class, 'resetPassword'])->middleware(['auth:sanctum', 'verified']);
 
 Route::controller(EmailVerifyController::class)->middleware('auth:sanctum')->group(function () {
     Route::get('/email/verify', 'notice')->name('verification.notice');
@@ -49,8 +51,6 @@ Route::controller(NewPasswordController::class)->group(function () {
     Route::post('/forgot-password', 'forgotPassword');
     Route::post('/reset-password', 'reset');
 });
-
-Route::post('/update-password', [UpdatePasswordController::class, 'resetPassword'])->middleware(['auth:sanctum', 'verified']);
 
 Route::controller(MapelController::class)->group(function () {
     Route::get('/mapel', 'index');

@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Models\Payment;
+use Illuminate\Support\Str;
+
 class AuthController extends Controller
 {
     public function register(Request $request)
@@ -26,11 +29,27 @@ class AuthController extends Controller
             'password' => 'required',
             'password_confirmation' => 'required|same:password',
             'role_id' => 'required',
+
+            'payment_price' => 'required',
+            'payment_picture' => 'required|file|image|max:5120',
+            'payment_method_id' => 'required',
         ]);
 
         $request['password'] = Hash::make($request->password);
-        $user = $request->except(['password_confirmation', '_token']);
+        $user = $request->only(['name', 'email', 'user_city', 'user_age', 'password', 'role_id']);
         $register = User::create($user);
+
+        $payment_picture = $request->file('payment_picture')->store('img/payment');
+        $payment = [
+            'payment_method_id' => $request->payment_method_id,
+            'id' => $register->id,
+            'payment_ref' => Str::upper(Str::random(14)),
+            'payment_picture' => $payment_picture,
+            'payment_price' => $request->payment_price,
+            'payment_status' => 'PENDING',
+        ];
+
+        Payment::create($payment);
 
         if ($register) {
             event(new Registered($register)); //send email verification

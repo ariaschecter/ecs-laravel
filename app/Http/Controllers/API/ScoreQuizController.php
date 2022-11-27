@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\ChoiceQuiz;
 use App\Models\ScoreQuiz;
 use Illuminate\Http\Request;
 
@@ -41,7 +40,7 @@ class ScoreQuizController extends Controller
     {
         $score = $request->validate([
             'id' => 'required',
-            'sub_mapel' => 'required',
+            'sub_mapel_id' => 'required',
             'score' => 'required',
         ]);
         $create_score = ScoreQuiz::create($score);
@@ -59,6 +58,7 @@ class ScoreQuizController extends Controller
     {
         $update = $request->validate([
             'id' => 'integer',
+            'sub_mapel_id' => 'integer',
             'score' => 'required',
         ]);
         $update_score = ScoreQuiz::where('score_id', $scoreQuiz->score_id)->update($update);

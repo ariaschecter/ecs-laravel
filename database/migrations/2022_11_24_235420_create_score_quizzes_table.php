@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('score_quizzes', function (Blueprint $table) {
             $table->id('score_id');
             $table->foreignId('id');
-            $table->foreignId('sub_mapel_id');
+            $table->foreignId('sub_mapel_id')->unique();
             $table->double('score')->default(0);
             $table->timestamps();
         });

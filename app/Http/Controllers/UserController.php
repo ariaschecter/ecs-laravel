@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -105,5 +106,39 @@ class UserController extends Controller
     {
         User::where('id', $user->id)->delete();
         return redirect('user');
+    }
+
+    public function loginpage() {
+        return view('auth');
+    }
+
+    public function login(Request $request) {
+        $credentials = $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $isActive =  User::where('email', $request->email)->first();
+            if($isActive->role_id != 1){
+                return back();
+            }
+
+            $request->session()->regenerate();
+
+            return redirect()->intended('mapel');
+        } else {
+            return back();
+        }
+    }
+
+    public function logout() {
+        Auth::logout();
+
+        session()->invalidate();
+
+        session()->regenerateToken();
+
+        return redirect('/');
     }
 }

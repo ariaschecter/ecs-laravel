@@ -22,11 +22,12 @@ use App\Http\Controllers\SubMapelController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/', 'loginpage');
+    Route::post('/', 'login');
 });
 
+Route::middleware('auth','isAdmin')->group(function () {
 Route::controller(MapelController::class)->group(function () {
     Route::get('/mapel', 'index');
     Route::get('/mapel/show/{mapel:mapel_id}', 'show');
@@ -82,6 +83,7 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/user/edit/{user:id}', 'edit');
     Route::post('/user/edit/{user:id}', 'update');
     Route::get('/user/delete/{user:id}', 'destroy');
+    Route::get('/logout', 'logout');
 });
 
 Route::controller(RoleController::class)->group(function () {
@@ -118,4 +120,6 @@ Route::controller(ScoreQuizController::class)->group(function () {
     Route::get('/score/edit/{scoreQuiz:score_id}', 'edit');
     Route::post('/score/update/{scoreQuiz:score_id}', 'update');
     Route::delete('/score/delete/{scoreQuiz:score_id}', 'destroy');
+});
+
 });

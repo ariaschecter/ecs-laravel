@@ -23,7 +23,7 @@ use App\Http\Controllers\SubMapelController;
 |
 */
 Route::controller(UserController::class)->group(function () {
-    Route::get('/', 'loginpage');
+    Route::get('/', 'loginpage')->name('login');
     Route::post('/', 'login');
 });
 

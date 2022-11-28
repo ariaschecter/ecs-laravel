@@ -6,9 +6,6 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title">Score Quiz Data</h4>
-                <a href="{{ url('score/add') }}" class="mt-2 btn btn-primary">
-                    Add Score Quiz
-                </a>
 
                 <table data-toggle="table" data-search="true" data-show-refresh="true" data-sort-name="id"
                     data-page-list="[10, 25, 100, all]" data-page-size="10" data-pagination="true"

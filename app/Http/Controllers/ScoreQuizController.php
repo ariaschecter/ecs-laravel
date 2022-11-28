@@ -8,6 +8,7 @@ use App\Models\ScoreQuiz;
 use App\Models\SubMapel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ScoreQuizController extends Controller
 {
@@ -29,10 +30,8 @@ class ScoreQuizController extends Controller
      */
     public function create()
     {
-        $users = User::get();
         $sub_mapels = SubMapel::with('mapel')->get();
         return view('score.add')->with([
-            'users' => $users,
             'sub_mapels' => $sub_mapels,
         ]);
     }
@@ -53,8 +52,9 @@ class ScoreQuizController extends Controller
             $benar += $score->choice_score;
             $soal++;
         }
+        $user = Auth::user();
         $score = [
-            'id' => $request->id,
+            'id' => $user->id,
             'sub_mapel_id' => $request->sub_mapel_id,
             'score' => $benar * 100 / $soal,
         ];

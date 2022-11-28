@@ -15,6 +15,7 @@ use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Models\Payment;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -72,6 +73,9 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+        if ($user->role_id == 1) {
+            return ResponseFormater::error(false, 'Gagal Login');
+        }
         $token = $user->createToken('token')->plainTextToken;
         $cookie = cookie('jwt', $token, 60 * 24);
 
@@ -113,10 +117,9 @@ class AuthController extends Controller
 
     public function logout()
     {
+        Auth::user()->currentAccessToken()->delete();
         $cookie = Cookie::forget('jwt');
-        return response([
-            'message' => 'Logout success'
-        ])->withCookie($cookie);
+        return ResponseFormater::success(true, 'Logout success')->withCookie($cookie);
     }
 
     public function destroy(User $user)

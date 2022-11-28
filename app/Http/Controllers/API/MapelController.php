@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Mapel;
+use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -17,7 +19,15 @@ class MapelController extends Controller
      */
     public function index()
     {
-        $mapels = Mapel::all();
+        $user_id = Auth::id();
+        $mapels = '';
+        $payment = Payment::where('id', $user_id)->first();
+        if ($payment->payment_status == 'SUCCESS') {
+            $mapels = Mapel::all();
+        } else {
+            $mapels = null;
+        }
+
         if (count($mapels) > 0) {
             return ResponseFormater::success($mapels, 'Sukses menampilkan data Mapel');
         }

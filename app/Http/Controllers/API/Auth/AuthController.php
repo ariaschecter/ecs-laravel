@@ -74,7 +74,7 @@ class AuthController extends Controller
 
         $user = Auth::user();
         if ($user->role_id == 1) {
-            return $this->logout();
+            return ResponseFormater::error(false, 'Gagal Login');
         }
         $token = $user->createToken('token')->plainTextToken;
         $cookie = cookie('jwt', $token, 60 * 24);

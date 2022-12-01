@@ -9,7 +9,7 @@
         <div class="card-body">
           <h4 class="header-title">Email terverifikasi silahkan login kembali</h4>
           <br>
-          <a href="http://localhost:8081/#/email-verify" class="btn btn-primary">klik disini!!!</a>
+          <a href="http://localhost:8081/email-verify" class="btn btn-primary">klik disini!!!</a>
         </div>
       </div>
     </div>

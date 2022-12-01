@@ -53,7 +53,9 @@ Route::controller(NewPasswordController::class)->group(function () {
 });
 
 Route::controller(MapelController::class)->group(function () {
-    Route::get('/mapel', 'index');
+    Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+        Route::get('/mapel', 'index');
+    });
     Route::post('/mapel/add', 'store');
     Route::get('/mapel/show/{mapel:mapel_id}', 'show');
     Route::post('/mapel/edit/{mapel:mapel_id}', 'update');

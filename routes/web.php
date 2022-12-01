@@ -26,6 +26,7 @@ use App\Http\Controllers\SubMapelController;
 Route::controller(UserController::class)->group(function () {
     Route::get('/', 'loginpage')->name('login');
     Route::post('/', 'login');
+    Route::get('/auth/logout', 'logout');
 });
 
 Route::middleware('auth', 'isAdmin')->group(function () {

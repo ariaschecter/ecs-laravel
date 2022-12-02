@@ -41,7 +41,7 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::post('/update-password', [UpdatePasswordController::class, 'resetPassword'])->middleware(['auth:sanctum']);
 
-Route::controller(EmailVerifyController::class)->group(function () {
+Route::controller(EmailVerifyController::class)->middleware('auth:sanctum')->group(function () {
     Route::get('/email/verify', 'notice')->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', 'verify')->name('verification.verify');
     Route::get('/email/verify/resend-verification', 'send')->name('verification.send');

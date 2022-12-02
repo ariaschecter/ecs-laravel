@@ -55,7 +55,10 @@ class AuthController extends Controller
         if ($register) {
             event(new Registered($register)); //send email verification
 
-            return ResponseFormater::success($register, 'Registrasi Berhasil silahkan login');
+            $token = $register->createToken('token')->plainTextToken;
+            $cookie = cookie('jwt', $token, 60 * 24);
+
+            return ResponseFormater::success($register, 'Registrasi Berhasil silahkan login')->withCookie($cookie);
         }
 
         return ResponseFormater::error($user, 'Register Gagal', 400);

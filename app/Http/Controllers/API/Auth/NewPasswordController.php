@@ -25,7 +25,7 @@ class NewPasswordController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return ResponseFormater::success('success', __($status));
+            return ResponseFormater::success('success', 'token berhasil dikirik ke email. silahkan cek email anda!');
         }
 
         throw ValidationException::withMessages([

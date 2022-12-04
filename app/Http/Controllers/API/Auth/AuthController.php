@@ -90,27 +90,31 @@ class AuthController extends Controller
         return ResponseFormater::success(Auth::user(), 'berhasil menampilkan users');
     }
 
-    public function updateUser(Request $request, User $user)
+    public function updateUser(Request $request)
     {
-        $validate =
-            $request->validate([
-                'name' => 'required',
-                'email' => ['required', Rule::unique('users')->ignore($user->id, 'id'), 'email'],
-                'user_picture' => 'file|image|max:5120',
-                'user_city' => 'required',
-                'user_age' => 'required',
-                'role_id' => 'required',
-            ]);
+        $user = Auth::user();
+        $request->validate([
+            'name' => 'required',
+            'user_picture' => 'file|image|max:5120',
+            'user_city' => 'required',
+            'user_age' => 'required',
+        ]);
+
+        $upload = 'img/profile/default.png';
+        $picture = $user->user_picture;
 
         if ($request->user_picture) {
-            if (Storage::get($user->user_picture)) {
+            if ($picture != $upload) {
                 Storage::delete($user->user_picture);
             }
-            $validate['user_picture'] = $request->file('mapel_picture')->store('img/mapel');
+            $picture = $request->file('user_picture')->store('img/profile');
         }
 
+        $update = $request->only(['name', 'user_city', 'user_age']);
+        $update['user_picture'] = $picture;
+
         $userDB = User::where('id', $user->id);
-        $updateDB = $userDB->update($validate);
+        $updateDB = $userDB->update($update);
 
         if ($updateDB) {
             return ResponseFormater::success($userDB->get(), 'User berhasil diperbarui');

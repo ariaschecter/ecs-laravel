@@ -34,7 +34,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/user/show', 'showUser');
         Route::get('/logout', 'logout');
-        Route::post('/user/edit/{user:id}', 'updateUser');
+        Route::post('/user/edit/', 'updateUser');
         Route::delete('/user/delete/{user:id}', 'destroy');
     });
 });

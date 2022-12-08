@@ -18,7 +18,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::all();
+        $payments = Payment::with('user')->get();
         if (count($payments) > 0) {
             return ResponseFormater::success($payments, 'Sukses menampilkan data Payments');
         }

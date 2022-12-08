@@ -31,10 +31,21 @@
                         @foreach ($payments as $payment)
                         <tr>
                             <td>{{ $i++ }}</td>
-                            <td>#{{ $payment->payment_ref }}</td>
-                            <td><img src="{{ asset('storage/' . $payment->payment_picture) }}"
-                                    alt="{{ 'Foto '. $payment->user->name }}" class="" width="75"></td>
+                            <td>{{ $payment->payment_ref }} </td>
+                            @if($payment->user)
+                            <td>
+                                <img src="{{ asset('storage/' . $payment->payment_picture) }}"
+                                    alt="{{ 'Foto '. $payment->user->name }}" class="" width="75">
+                            </td>
                             <td>{{ $payment->user->email }}</td>
+                            @else
+                            <td>
+                                <img src="{{ asset('storage/' . $payment->payment_picture) }}" alt="{{ 'Foto kosong' }}"
+                                    class="" width="75">
+                            </td>
+                            <td>Kosong</td>
+                            @endif
+
                             <td>Rp. {{ number_format($payment->payment_price, 0) }}</td>
                             <td>{{ $payment->payment_status }}</td>
                             <td>

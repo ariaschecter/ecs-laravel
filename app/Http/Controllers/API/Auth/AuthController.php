@@ -88,9 +88,9 @@ class AuthController extends Controller
         return ResponseFormater::success(Auth::user(), 'berhasil menampilkan users');
     }
 
-    public function updateUser(Request $request)
+    public function updateUser(Request $request, $id)
     {
-        $user = Auth::user();
+        $user = User::find($id);
         $request->validate([
             'name' => 'required',
             'user_picture' => 'file|image|max:5120',

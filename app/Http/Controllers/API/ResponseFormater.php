@@ -13,9 +13,10 @@ class ResponseFormater
         'data' => null
     ];
 
-    public static function success($data = null, $message = null)
+    public static function success($data = null, $message = null, $token = null)
     {
         self::$response['meta']['message'] = $message;
+        self::$response['token'] = $token;
         self::$response['data'] = $data;
 
         return response()->json(self::$response, self::$response['meta']['code']);

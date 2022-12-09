@@ -4,39 +4,45 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\API\ResponseFormater;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
 class EmailVerifyController extends Controller
 {
     public function notice(Request $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
-            return ResponseFormater::success($request->all(), 'Already Verified');
+        $user = User::find($request->route('id'));
+        if ($user->hasVerifiedEmail()) {
+            return ResponseFormater::success($user, 'Already Verified');
         }
         return ResponseFormater::error(false, 'verifikasi email anda!!!');
     }
 
-    public function verify(EmailVerificationRequest $request)
+    public function verify(Request $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        $user = User::find($request->route('id'));
+        if ($user->hasVerifiedEmail()) {
             return ResponseFormater::error(false, 'Already Verified', 400);
         }
-
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
+        if (!hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
+            return ResponseFormater::error(false, 'Verify failed', 400);
         }
 
-        return view('email_verify.index');
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
+        return view('email_verify.index')->with('id', $request->route('id'));
     }
 
     public function send(Request $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        $user = User::find($request->route('id'));
+        if ($user->hasVerifiedEmail()) {
             return ResponseFormater::error(false, 'Already Verified', 400);
         }
-        $request->user()->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification();
         return ResponseFormater::success(true, 'Verifikasi email berhasil dikirim');
     }
 }

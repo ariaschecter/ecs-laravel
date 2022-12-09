@@ -56,9 +56,8 @@ class AuthController extends Controller
             event(new Registered($register)); //send email verification
 
             $token = $register->createToken('token')->plainTextToken;
-            $cookie = cookie('jwt', $token, 60 * 24, null, null, false, false);
 
-            return ResponseFormater::success($register, 'Registrasi Berhasil silahkan login')->withCookie($cookie);
+            return ResponseFormater::success($register, 'Registrasi Berhasil silahkan login', $token);
         }
 
         return ResponseFormater::error($user, 'Register Gagal', 400);
@@ -80,9 +79,8 @@ class AuthController extends Controller
             return ResponseFormater::error(false, 'Gagal Login');
         }
         $token = $user->createToken('token')->plainTextToken;
-        $cookie = cookie('jwt', $token, 60 * 24, null, null, false, false);
 
-        return ResponseFormater::success($user, 'Login Success')->withCookie($cookie);
+        return ResponseFormater::success($user, 'Login Success', $token);
     }
 
     public function showUser(Request $request)
